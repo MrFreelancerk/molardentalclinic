@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-navy: #123B65;
+  --color-navy-dark: #0A223B;
+  --color-blue: #2675D8;
+  --color-blue-dark: #1C5EB0;
+  --color-green: #39A852;
+  --color-green-light: #E8F7EC;
+  --color-ice: #F5F9FC;
+  --color-ice-dark: #E6EFF6;
+}
+
+/* ---------------------------------------------------------------------------
+   Surfaces & ink. Every themed component reads these tokens, so flipping the
+   `.dark` class on <html> re-skins the whole site without touching markup.
+   The light canvas is a soft cool grey (#F2F5F8) rather than pure white so it
+   doesn't glare on bright screens; cards stay white to keep the separation.
+--------------------------------------------------------------------------- */
+:root {
+  --page: #F2F5F8;
+  --card: #FFFFFF;
+  --card-soft: #F7F9FB;
+  --surface-alt: #EAF0F6;
+  --line: #E1E7EE;
+  --ink: #123B65;
+  --ink-soft: #5A6B7D;
+  --ink-faint: #93A2B2;
+  --accent-soft: #EAF2FB;
+  --tint-green: #DCE9DC;
+  --tint-violet: #E4DCF5;
+  --tint-blue: #D9EAF8;
+  --tint-peach: #F8E6D8;
+  --green-soft: #E8F7EC;
+  --blue-soft: #EEF4FC;
+  --violet-soft: #F4F0FC;
+  --peach-soft: #FDF2E7;
+}
+
+.dark {
+  --page: #070D14;
+  --card: #0E1721;
+  --card-soft: #0B131C;
+  --surface-alt: #0C151F;
+  --line: #1E2B38;
+  --ink: #E9F0F7;
+  --ink-soft: #9BABBB;
+  --ink-faint: #6E7F8F;
+  --accent-soft: #12273D;
+  --tint-green: #122219;
+  --tint-violet: #1B1727;
+  --tint-blue: #0F2130;
+  --tint-peach: #241A13;
+  --green-soft: #0F2418;
+  --blue-soft: #0E2233;
+  --violet-soft: #1A1630;
+  --peach-soft: #241A11;
+}
+
+:root {
+  --font-heading: 'Sora', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color-scheme: light;
+}
+
+.dark {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--page);
+  color: var(--ink);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--card-soft);
+}
+::-webkit-scrollbar-thumb {
+  background: #CBDCEB;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2675D8;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #2A3B4C;
+}
