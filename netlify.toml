@@ -1,0 +1,18 @@
+# Netlify build configuration for the Next.js app.
+# Without this, a manually configured publish directory (or a build that never
+# produced output) leaves Netlify with nothing to serve and every route shows
+# "Page not found".
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  # Next.js 16 needs Node 20.9+; 22 is what the Netlify Next runtime is tested on.
+  NODE_VERSION = "22"
+
+# Netlify's Next.js runtime turns the Next build output into Netlify functions
+# and static assets. It is what serves /, /services, /contact and the ISR/SSR
+# routes instead of a flat static folder.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
