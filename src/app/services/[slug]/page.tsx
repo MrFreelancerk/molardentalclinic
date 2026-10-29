@@ -16,9 +16,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const service = getService(slug);
 
-  if (!service) {
-    return { title: "Treatment not found | Molar Dental Hospital" };
-  }
+  // Unknown treatments must 404 from metadata as well as from the page, or the
+  // prerender passes disagree and the render fails with a 500.
+  if (!service) notFound();
 
   return {
     title: service.metaTitle,
