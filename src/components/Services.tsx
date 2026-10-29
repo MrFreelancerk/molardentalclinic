@@ -102,8 +102,12 @@ export default function Services({ onSelectService }: ServicesProps) {
           {/* Card 2: Photo Card (Root Canal Therapy in Action) */}
           <div className="relative rounded-3xl overflow-hidden group shadow-xs hover:shadow-lg transition-all duration-300 min-h-[300px] flex flex-col justify-end">
             <img
-              src="/services/root-canal-procedure.png"
+              src="/services/root-canal-procedure-1200.webp"
+              srcSet="/services/root-canal-procedure-640.webp 640w, /services/root-canal-procedure-1200.webp 1200w"
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 45vw, 92vw"
               alt="Root Canal Treatment at Molar Dental"
+              loading="lazy"
+              decoding="async"
               className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
@@ -160,7 +164,9 @@ export default function Services({ onSelectService }: ServicesProps) {
           {/* Card 4: Photo Card (Teeth Whitening Procedure) */}
           <div className="relative rounded-3xl overflow-hidden group shadow-xs hover:shadow-lg transition-all duration-300 min-h-[300px] flex flex-col justify-end">
             <img
-              src="/services/teeth-whitening.png"
+              src="/services/teeth-whitening-1200.webp"
+              srcSet="/services/teeth-whitening-640.webp 640w, /services/teeth-whitening-1200.webp 1200w"
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 45vw, 92vw"
               alt="Laser Teeth Whitening"
               className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
@@ -218,7 +224,9 @@ export default function Services({ onSelectService }: ServicesProps) {
           {/* Card 6: Photo Card (Dental Implants & 3D Precision) */}
           <div className="relative rounded-3xl overflow-hidden group shadow-xs hover:shadow-lg transition-all duration-300 min-h-[300px] flex flex-col justify-end">
             <img
-              src="/services/dental-implants.png"
+              src="/services/dental-implants-1200.webp"
+              srcSet="/services/dental-implants-640.webp 640w, /services/dental-implants-1200.webp 1200w"
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 45vw, 92vw"
               alt="Swiss Titanium Dental Implants"
               className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />
@@ -276,7 +284,9 @@ export default function Services({ onSelectService }: ServicesProps) {
           {/* Card 8: Photo Card (Clear Aligner Confident Smile) */}
           <div className="relative rounded-3xl overflow-hidden group shadow-xs hover:shadow-lg transition-all duration-300 min-h-[300px] flex flex-col justify-end">
             <img
-              src="/services/clear-aligners.png"
+              src="/services/clear-aligners-1200.webp"
+              srcSet="/services/clear-aligners-640.webp 640w, /services/clear-aligners-1200.webp 1200w"
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 45vw, 92vw"
               alt="Clear Aligners Smile Transformation"
               className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
             />

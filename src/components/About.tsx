@@ -9,13 +9,16 @@ export default function About() {
       title: "Experienced Dentists",
       description: "Skilled professionals dedicated to providing exceptional dental care.",
       image: "/hero-1280.webp",
+      srcSet: "/hero-640.webp 640w, /hero-960.webp 960w, /hero-1280.webp 1280w",
       alt: "Experienced dentists providing exceptional dental care",
     },
     {
       category: "Technology",
       title: "Advanced Technology",
       description: "Modern equipment for accurate diagnosis and comfortable treatments.",
-      image: "/services/root-canal-procedure.png",
+      image: "/services/root-canal-procedure-1200.webp",
+      srcSet:
+        "/services/root-canal-procedure-640.webp 640w, /services/root-canal-procedure-1200.webp 1200w",
       alt: "Advanced dental technology and modern equipment",
     },
     {
@@ -100,7 +103,11 @@ export default function About() {
               <div className="h-36 sm:h-40 w-full overflow-hidden bg-[var(--card-soft)] border-t border-[#F2F2F2]">
                 <img
                   src={card.image}
+                  srcSet={card.srcSet}
+                  sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 92vw"
                   alt={card.alt}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               </div>

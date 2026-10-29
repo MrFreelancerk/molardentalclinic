@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowRight, Calendar, Phone, CheckCircle2, ChevronRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import AppointmentModal from "@/components/AppointmentModal";
-import { services, type Service } from "@/data/services";
+import { services, serviceSrcSet, type Service } from "@/data/services";
 
 interface ServiceDetailProps {
   service: Service;
@@ -80,7 +80,11 @@ export default function ServiceDetail({ service }: ServiceDetailProps) {
                 <div className="relative rounded-2xl overflow-hidden border border-white/10 aspect-[4/3] w-full">
                   <img
                     src={service.image}
+                    srcSet={serviceSrcSet(service.image)}
+                    sizes="(min-width: 1024px) 40vw, 92vw"
                     alt={service.imageAlt}
+                    fetchPriority="high"
+                    decoding="async"
                     className="w-full h-full object-cover"
                   />
                 </div>

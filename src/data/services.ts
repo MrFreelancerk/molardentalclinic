@@ -32,7 +32,7 @@ export const services: Service[] = [
     category: "Endodontics",
     summary:
       "Eliminate infection and tooth pain with advanced, painless root canal treatment while preserving your natural tooth.",
-    image: "/services/root-canal-procedure.png",
+    image: "/services/root-canal-procedure-1200.webp",
     imageAlt: "Root canal treatment being performed at Molar Dental Hospital",
     metaTitle: "Root Canal Treatment in Indresham, Patancheru | Molar Dental",
     metaDescription:
@@ -146,7 +146,7 @@ export const services: Service[] = [
     category: "Implantology",
     summary:
       "Replace missing teeth with natural-looking dental implants for a stronger bite, lasting comfort, & confident smile.",
-    image: "/services/dental-implants.png",
+    image: "/services/dental-implants-1200.webp",
     imageAlt: "Dental implant model showing a titanium post and crown",
     metaTitle: "Best Dental Implants in Indresham, Patancheru | Molar Dental",
     metaDescription:
@@ -229,7 +229,7 @@ export const services: Service[] = [
     category: "Orthodontics",
     summary:
       "Clear, removable aligners gently straighten your teeth without the appearance of traditional braces.",
-    image: "/services/clear-aligners.png",
+    image: "/services/clear-aligners-1200.webp",
     imageAlt: "Clear invisible aligner being fitted on a patient's teeth",
     metaTitle: "Best Invisible Aligners in Indresham, Patancheru | Molar Dental",
     metaDescription:
@@ -350,7 +350,7 @@ export const services: Service[] = [
     category: "Orthodontics",
     summary:
       "Tooth-colored ceramic braces provide effective orthodontic treatment with a more natural appearance.",
-    image: "/services/orthodontics.png",
+    image: "/services/orthodontics-1200.webp",
     imageAlt: "Orthodontic braces treatment with a digital orthodontic plan on screen",
     metaTitle: "Best Braces Treatment in Indresham, Patancheru | Molar Dental",
     metaDescription:
@@ -472,7 +472,7 @@ export const services: Service[] = [
     category: "Restorative",
     summary:
       "Restore damaged teeth with durable zirconia crowns that blend seamlessly with your natural smile.",
-    image: "/services/zirconia-crowns.png",
+    image: "/services/zirconia-crowns-1200.webp",
     imageAlt: "Zirconia crown being fitted to restore a damaged tooth",
     metaTitle: "Best Zirconia Crowns in Indresham | Dental Crowns | Molar Dental",
     metaDescription:
@@ -574,7 +574,7 @@ export const services: Service[] = [
     category: "Diagnostics",
     summary:
       "Get fast, low-radiation digital dental X-rays for accurate diagnosis, precise treatment planning, and better oral care.",
-    image: "/services/dental-xray.png",
+    image: "/services/dental-xray-1200.webp",
     imageAlt: "Digital dental X-ray being taken with a panoramic imaging machine",
     metaTitle: "Best Dental RVG X-Ray in Indresham, Patancheru | Molar Dental",
     metaDescription:
@@ -693,7 +693,7 @@ export const services: Service[] = [
     category: "Cosmetic",
     summary:
       "Professional whitening removes stains and enhances the brightness of your smile safely and effectively.",
-    image: "/services/teeth-whitening.png",
+    image: "/services/teeth-whitening-1200.webp",
     imageAlt: "Professional laser teeth whitening treatment in progress",
     metaTitle: "Best Teeth Whitening in Indresham, Patancheru | Molar Dental",
     metaDescription:
@@ -809,7 +809,7 @@ export const services: Service[] = [
     category: "Oral Surgery",
     summary:
       "Gentle, painless tooth extractions using advanced techniques for safe treatment, faster healing, & smooth recovery.",
-    image: "/services/laser-dentistry.png",
+    image: "/services/laser-dentistry-1200.webp",
     imageAlt: "Gentle tooth extraction using advanced laser dentistry equipment",
     metaTitle: "Tooth Extraction in Indresham, Patancheru | Molar Dental",
     metaDescription:
@@ -915,4 +915,13 @@ export const serviceNav = services.map(({ slug, name, category }) => ({
 
 export function getService(slug: string): Service | undefined {
   return services.find((service) => service.slug === slug);
+}
+
+/**
+ * Responsive sources for a treatment photograph: a 640w and a 1200w WebP.
+ * `image` is the 1200w file, e.g. "/services/dental-implants-1200.webp".
+ */
+export function serviceSrcSet(image: string) {
+  const base = image.replace(/-\d+\.webp$/, "");
+  return `${base}-640.webp 640w, ${base}-1200.webp 1200w`;
 }

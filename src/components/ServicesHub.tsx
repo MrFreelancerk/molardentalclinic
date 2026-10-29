@@ -5,7 +5,7 @@ import Link from "next/link";
 import { ArrowRight, Calendar, Phone, ShieldCheck, CheckCircle2 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import AppointmentModal from "@/components/AppointmentModal";
-import { services } from "@/data/services";
+import { services, serviceSrcSet } from "@/data/services";
 
 export default function ServicesHub() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
@@ -90,8 +90,11 @@ export default function ServicesHub() {
                   <div className="h-40 sm:h-44 w-full overflow-hidden bg-[var(--card-soft)]">
                     <img
                       src={service.image}
+                      srcSet={serviceSrcSet(service.image)}
+                      sizes="(min-width: 1024px) 24vw, (min-width: 640px) 45vw, 92vw"
                       alt={service.imageAlt}
                       loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   </div>
