@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Phone, Check } from "lucide-react";
 
 interface HeroProps {
@@ -7,17 +8,82 @@ interface HeroProps {
 }
 
 const STATS = [
-  { label: "Root Canals", value: "500+" },
-  { label: "Paediatric RCT", value: "200+" },
-  { label: "Extractions", value: "400+" },
-  { label: "Surgical Extractions", value: "25+" },
-  { label: "Zirconia Crowns", value: "200+" },
-  { label: "Dental Bridges", value: "200+" },
+  { label: "Root Canals", value: 500 },
+  { label: "Paediatric RCT", value: 200 },
+  { label: "Extractions", value: 400 },
+  { label: "Surgical Extractions", value: 25 },
+  { label: "Zirconia Crowns", value: 200 },
+  { label: "Dental Bridges", value: 200 },
 ];
 
 const PROOF = ["Painless treatment", "Digital RVG X-ray on site", "Open all 7 days"];
 
+/** Counts from 0 to `target` once `run` flips to true (eased, ~1.6s). */
+function useCountUp(target: number, run: boolean, duration = 1600) {
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    if (!run) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const start = performance.now();
+    let frame = 0;
+
+    const tick = (now: number) => {
+      const progress = reduced ? 1 : Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setValue(Math.round(target * eased));
+      if (progress < 1) frame = requestAnimationFrame(tick);
+    };
+
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [target, run, duration]);
+
+  return value;
+}
+
+function StatCell({ label, value, run }: { label: string; value: number; run: boolean }) {
+  const displayed = useCountUp(value, run);
+
+  return (
+    <div className="flex flex-col justify-between gap-3 border-l border-t border-white/[0.08] px-4 py-4 sm:px-5 sm:py-5">
+      {/* Number first, label pinned to the bottom so every figure sits on one line */}
+      <dd className="order-1 text-[26px] leading-none font-extrabold tracking-tight text-white tabular-nums sm:text-[28px]">
+        {displayed}
+        <span className="text-[#8CC0F5]">+</span>
+      </dd>
+      <dt className="order-2 text-[10px] font-semibold uppercase tracking-[0.12em] text-white/45 leading-snug sm:text-[11px]">
+        {label}
+      </dt>
+    </div>
+  );
+}
+
 export default function Hero({ onOpenBooking }: HeroProps) {
+  const shelfRef = useRef<HTMLDListElement>(null);
+  const [counting, setCounting] = useState(false);
+
+  // Start the counters the first time the shelf scrolls into view.
+  useEffect(() => {
+    const el = shelfRef.current;
+    if (!el || counting) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setCounting(true);
+          observer.disconnect();
+        }
+      },
+      // Fire as soon as any part of the shelf is on screen, so the figures are
+      // never left sitting at 0 on shorter viewports.
+      { threshold: 0, rootMargin: "0px 0px -5% 0px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [counting]);
+
   return (
     <section id="home" className="relative w-full min-h-[100svh] overflow-hidden bg-[#070D14] flex flex-col">
       {/* Full-bleed clinic photograph */}
@@ -93,19 +159,9 @@ export default function Hero({ onOpenBooking }: HeroProps) {
         <div className="mt-10 w-full">
           <div className="overflow-hidden rounded-2xl border border-white/10 bg-[#070D14]/60 backdrop-blur-xl shadow-[0_24px_60px_-30px_rgba(0,0,0,1)]">
             {/* 1px hairline grid: each cell carries its top/left border, the wrapper clips the outer edges */}
-            <dl className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 -ml-px -mt-px">
+            <dl ref={shelfRef} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 -ml-px -mt-px">
               {STATS.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="border-l border-t border-white/[0.08] px-4 py-4 sm:px-5 sm:py-5"
-                >
-                  <dt className="text-[10px] font-semibold uppercase tracking-[0.12em] text-white/45 sm:text-[11px]">
-                    {stat.label}
-                  </dt>
-                  <dd className="mt-1.5 text-2xl font-extrabold tracking-tight text-white sm:text-[26px]">
-                    {stat.value}
-                  </dd>
-                </div>
+                <StatCell key={stat.label} label={stat.label} value={stat.value} run={counting} />
               ))}
             </dl>
           </div>
