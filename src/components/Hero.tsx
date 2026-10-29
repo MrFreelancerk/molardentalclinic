@@ -86,12 +86,23 @@ export default function Hero({ onOpenBooking }: HeroProps) {
 
   return (
     <section id="home" className="relative w-full min-h-[100svh] overflow-hidden bg-[#070D14] flex flex-col">
-      {/* Full-bleed clinic photograph */}
-      <div
-        className="absolute inset-0 bg-cover bg-no-repeat bg-[position:68%_center] sm:bg-[position:70%_center] lg:bg-right"
-        style={{ backgroundImage: "url('/herosectionimg.png')" }}
-        aria-hidden="true"
-      />
+      {/* Full-bleed clinic photograph (WebP srcset, JPEG fallback) */}
+      <picture className="absolute inset-0">
+        <source
+          type="image/webp"
+          srcSet="/hero-640.webp 640w, /hero-960.webp 960w, /hero-1280.webp 1280w, /hero-1600.webp 1600w, /hero-1871.webp 1871w"
+          sizes="100vw"
+        />
+        <img
+          src="/hero-fallback.jpg"
+          alt=""
+          width={1871}
+          height={840}
+          fetchPriority="high"
+          decoding="async"
+          className="h-full w-full object-cover object-[68%_center] sm:object-[70%_center] lg:object-right"
+        />
+      </picture>
 
       {/* Layered scrims: directional for the copy, vertical for the stats shelf */}
       <div className="absolute inset-0 bg-gradient-to-r from-[#050A11]/96 via-[#050A11]/78 to-[#050A11]/20 sm:to-transparent" />

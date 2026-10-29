@@ -8,7 +8,7 @@ export default function About() {
       category: "Expertise",
       title: "Experienced Dentists",
       description: "Skilled professionals dedicated to providing exceptional dental care.",
-      image: "/herosectionimg.png",
+      image: "/hero-1280.webp",
       alt: "Experienced dentists providing exceptional dental care",
     },
     {
