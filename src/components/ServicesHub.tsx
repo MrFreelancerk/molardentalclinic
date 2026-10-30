@@ -1,151 +1,378 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
-import { ArrowRight, Calendar, Phone, ShieldCheck, CheckCircle2 } from "lucide-react";
+import {
+  Calendar,
+  Phone,
+  ArrowRight,
+  Check,
+  Search,
+  X,
+  ShieldCheck,
+  Stethoscope,
+  ScanLine,
+} from "lucide-react";
 import Navbar from "@/components/Navbar";
 import AppointmentModal from "@/components/AppointmentModal";
 import { services, serviceSrcSet } from "@/data/services";
 
+const serviceHighlights: Record<
+  string,
+  { badge: string; categoryGroup: string; features: string[] }
+> = {
+  "root-canal-treatment": {
+    badge: "100% Painless",
+    categoryGroup: "Endodontics & Restorative",
+    features: ["Save Natural Tooth", "Single-Visit Option"],
+  },
+  "dental-implants": {
+    badge: "Lifelong Solution",
+    categoryGroup: "Implants & Oral Surgery",
+    features: ["Natural Chewing Force", "German Titanium"],
+  },
+  "invisible-aligners": {
+    badge: "Virtually Invisible",
+    categoryGroup: "Orthodontics & Aligners",
+    features: ["Removable Trays", "Custom 3D Digital Plan"],
+  },
+  "braces": {
+    badge: "Precise Alignment",
+    categoryGroup: "Orthodontics & Aligners",
+    features: ["Ceramic & Metal", "Complete Bite Correction"],
+  },
+  "zirconia-crowns": {
+    badge: "Natural Aesthetics",
+    categoryGroup: "Endodontics & Restorative",
+    features: ["Metal-Free Ceramic", "Ultra-High Durability"],
+  },
+  "digital-rvg-x-ray": {
+    badge: "Instant Diagnosis",
+    categoryGroup: "Cosmetics & Diagnostics",
+    features: ["90% Low Radiation", "HD Digital Imaging"],
+  },
+  "teeth-whitening": {
+    badge: "Same-Day Glow",
+    categoryGroup: "Cosmetics & Diagnostics",
+    features: ["Safe Enamel Care", "Up to 8 Shades Whiter"],
+  },
+  "tooth-extraction": {
+    badge: "Gentle Recovery",
+    categoryGroup: "Implants & Oral Surgery",
+    features: ["Zero-Pain Extraction", "Fast Healing Protocol"],
+  },
+};
+
+const categoryFilters = [
+  "All Treatments",
+  "Endodontics & Restorative",
+  "Orthodontics & Aligners",
+  "Implants & Oral Surgery",
+  "Cosmetics & Diagnostics",
+];
+
 export default function ServicesHub() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [selectedService, setSelectedService] = useState("Comprehensive Oral Checkup");
+  const [activeCategory, setActiveCategory] = useState("All Treatments");
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleOpenBooking = (serviceName?: string) => {
     if (serviceName) setSelectedService(serviceName);
     setIsBookingOpen(true);
   };
 
+  const resetFilters = () => {
+    setActiveCategory("All Treatments");
+    setSearchQuery("");
+  };
+
+  const filteredServices = useMemo(() => {
+    return services.filter((service) => {
+      const highlight = serviceHighlights[service.slug];
+      const matchesCategory =
+        activeCategory === "All Treatments" ||
+        highlight?.categoryGroup === activeCategory;
+
+      const q = searchQuery.toLowerCase().trim();
+      if (!q) return matchesCategory;
+
+      const matchesSearch =
+        service.name.toLowerCase().includes(q) ||
+        service.category.toLowerCase().includes(q) ||
+        service.summary.toLowerCase().includes(q) ||
+        highlight?.features.some((f) => f.toLowerCase().includes(q));
+
+      return matchesCategory && matchesSearch;
+    });
+  }, [activeCategory, searchQuery]);
+
   return (
-    <div className="relative min-h-screen bg-[var(--page)]">
+    <div className="min-h-screen bg-[var(--page)] text-[var(--ink)]">
       <Navbar onOpenBooking={() => handleOpenBooking("Comprehensive Oral Checkup")} />
 
-      <main>
+      <main id="main">
         {/* ================= HERO ================= */}
-        <section className="relative bg-[#090C10] text-white pt-32 pb-16 sm:pt-40 sm:pb-20 overflow-hidden">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -top-24 right-0 w-[420px] h-[420px] bg-[#2675D8]/20 blur-3xl rounded-full"
-          />
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute bottom-0 left-0 w-[320px] h-[320px] bg-[#39A852]/10 blur-3xl rounded-full"
-          />
+        <section className="bg-[var(--navy)] text-white pt-32 pb-14 sm:pt-40 sm:pb-18 border-b border-white/10">
+          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14">
+            <div className="max-w-3xl">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#8CBBE4]">
+                Treatments &middot; Indresham, Patancheru
+              </p>
 
-          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#39A852] mb-4">
-              Our Services
-            </p>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.06] max-w-3xl">
-              Dental treatments,
-              <br className="hidden sm:block" /> all under one roof
-            </h1>
-            <p className="mt-5 max-w-xl text-sm sm:text-base text-[var(--ink-faint)] font-normal leading-relaxed">
-              From single-sitting root canals and implants to aligners, crowns, whitening and
-              diagnostics — every treatment is planned digitally and delivered with gentle,
-              hospital-grade care in Indresham, Patancheru.
-            </p>
+              <h1 className="mt-5 text-[32px] sm:text-[44px] lg:text-[52px] font-bold tracking-[-0.025em] leading-[1.06]">
+                Dental treatments,
+                <br className="hidden sm:block" />{" "}
+                <span className="text-white/55">all under one roof.</span>
+              </h1>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <button
-                onClick={() => handleOpenBooking("Comprehensive Oral Checkup")}
-                className="inline-flex items-center gap-2 bg-white hover:bg-slate-100 text-[#123B65] text-sm font-bold px-6 py-3 rounded-full shadow-md transition-all hover:scale-[1.03] active:scale-100 cursor-pointer"
-              >
-                <Calendar className="w-4 h-4 text-[#2675D8]" />
-                <span>Book a Consultation</span>
-              </button>
+              <p className="mt-5 max-w-xl text-sm sm:text-[15px] leading-relaxed text-slate-300/90">
+                Specialised, gentle care planned digitally and performed by senior
+                specialists — with hospital-grade sterilisation and modern technology.
+              </p>
 
-              <a
-                href="tel:+919133933392"
-                className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-sm font-semibold px-6 py-3 rounded-full backdrop-blur-md transition-colors"
-              >
-                <Phone className="w-4 h-4 text-emerald-400" />
-                <span>+91 91339 33392</span>
-              </a>
-            </div>
-
-            <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 text-[11px] font-medium text-[var(--ink-faint)]">
-              <span className="inline-flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#39A852]" />
-                Sterile, hospital-grade protocols
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#39A852]" />
-                Digital diagnosis & treatment planning
-              </span>
-            </div>
-          </div>
-        </section>
-
-        {/* ================= SERVICE CARDS ================= */}
-        <section className="bg-[var(--page)] py-16 sm:py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
-              {services.map((service) => (
-                <Link
-                  key={service.slug}
-                  href={`/services/${service.slug}`}
-                  className="group bg-[var(--card)] rounded-xl border border-[var(--line)] overflow-hidden flex flex-col hover:border-[#2675D8]/40 hover:shadow-md transition-all duration-300"
+              <div className="mt-9 flex flex-wrap items-center gap-3">
+                <button
+                  onClick={() => handleOpenBooking("Comprehensive Oral Checkup")}
+                  className="inline-flex h-12 items-center gap-2 bg-white hover:bg-white/90 text-[#0e2439] text-[14px] font-semibold px-6 rounded-full transition-colors duration-200 cursor-pointer"
                 >
-                  <div className="h-40 sm:h-44 w-full overflow-hidden bg-[var(--card-soft)]">
-                    <img
-                      src={service.image}
-                      srcSet={serviceSrcSet(service.image)}
-                      sizes="(min-width: 1024px) 24vw, (min-width: 640px) 45vw, 92vw"
-                      alt={service.imageAlt}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
+                  <Calendar className="w-4 h-4" />
+                  <span>Book Free Consultation</span>
+                </button>
 
-                  <div className="p-5 flex flex-col flex-1">
-                    <span className="text-[11px] font-semibold uppercase tracking-wider text-[#2675D8] mb-2">
-                      {service.category}
-                    </span>
-                    <h2 className="text-lg font-bold text-[var(--ink)] tracking-tight leading-snug mb-2">
-                      {service.name}
-                    </h2>
-                    <p className="text-xs text-[var(--ink-soft)] leading-relaxed font-normal mb-5">
-                      {service.summary}
-                    </p>
-
-                    <span className="mt-auto inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--ink)] group-hover:text-[#2675D8] transition-colors">
-                      <span>Read more</span>
-                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                    </span>
-                  </div>
-                </Link>
-              ))}
+                <a
+                  href="tel:+919133933392"
+                  className="inline-flex items-center gap-2 border border-white/25 hover:border-white/50 hover:bg-white/5 text-white text-[13px] font-medium px-5 py-3 rounded-full transition-colors duration-200"
+                >
+                  <Phone className="w-4 h-4 text-white/70" />
+                  <span>+91 91339 33392</span>
+                </a>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* ================= CTA ================= */}
-        <section className="bg-[#090C10] text-white py-16 sm:py-20">
-          <div className="max-w-4xl mx-auto px-6 text-center">
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-              Not sure which treatment you need?
-            </h2>
-            <p className="mt-3 text-sm sm:text-base text-[var(--ink-faint)] font-normal">
-              Book a comprehensive oral checkup. Our specialists will examine, take digital X-rays
-              if required, and recommend the right plan for your smile.
-            </p>
-            <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
-              <button
-                onClick={() => handleOpenBooking("Comprehensive Oral Checkup")}
-                className="inline-flex items-center gap-2 bg-white hover:bg-slate-100 text-[#123B65] text-sm font-bold px-6 py-3 rounded-full transition-colors cursor-pointer"
-              >
-                <Calendar className="w-4 h-4 text-[#2675D8]" />
-                <span>Book an Appointment</span>
-              </button>
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-sm font-semibold px-6 py-3 rounded-full transition-colors"
-              >
-                <span>Contact the clinic</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+        {/* ================= FILTERS ================= */}
+        <section className="sticky top-16 z-20 bg-[var(--card)]/95 backdrop-blur-md border-b border-[var(--line)]">
+          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 py-3.5">
+              <div className="flex items-center gap-1 overflow-x-auto no-scrollbar -mx-1 px-1">
+                {categoryFilters.map((cat) => {
+                  const isActive = activeCategory === cat;
+                  return (
+                    <button
+                      key={cat}
+                      onClick={() => setActiveCategory(cat)}
+                      aria-pressed={isActive}
+                      className={`shrink-0 px-3.5 py-2 rounded-full text-[12.5px] whitespace-nowrap transition-colors duration-200 cursor-pointer ${
+                        isActive
+                          ? "bg-[var(--ink)] text-[var(--card)] font-semibold"
+                          : "text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--card-soft)] font-medium"
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="relative w-full lg:w-64 shrink-0">
+                <Search className="w-4 h-4 text-[var(--ink-faint)] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search treatments"
+                  aria-label="Search treatments"
+                  className="w-full h-10 pl-9 pr-9 bg-[var(--page)] border border-[var(--line)] rounded-full text-[13px] text-[var(--ink)] placeholder:text-[var(--ink-faint)] focus:outline-none focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/15 transition-colors"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--ink-faint)] hover:text-[var(--ink)] cursor-pointer"
+                    aria-label="Clear search"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ================= TREATMENTS ================= */}
+        <section className="py-10 sm:py-14 lg:py-16">
+          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14">
+            <div className="flex items-baseline justify-between gap-4 mb-7">
+              <p className="text-[12.5px] text-[var(--ink-soft)]">
+                {filteredServices.length} treatment{filteredServices.length === 1 ? "" : "s"}
+                {activeCategory !== "All Treatments" && (
+                  <span className="text-[var(--ink-faint)]"> &middot; {activeCategory}</span>
+                )}
+              </p>
+
+              {(activeCategory !== "All Treatments" || searchQuery) && (
+                <button
+                  onClick={resetFilters}
+                  className="text-[12.5px] font-medium text-[var(--accent)] hover:text-[var(--accent-strong)] hover:underline underline-offset-4 cursor-pointer"
+                >
+                  Clear filters
+                </button>
+              )}
+            </div>
+
+            {filteredServices.length === 0 && (
+              <div className="py-16 px-6 text-center bg-[var(--card)] rounded-2xl border border-[var(--line)] max-w-md mx-auto">
+                <Stethoscope className="w-8 h-8 text-[var(--ink-faint)] mx-auto" strokeWidth={1.5} />
+                <h3 className="mt-4 text-base font-semibold text-[var(--ink)]">
+                  No treatments found
+                </h3>
+                <p className="mt-1.5 text-[13px] leading-relaxed text-[var(--ink-soft)]">
+                  Nothing matches &ldquo;{searchQuery}&rdquo;. Try a different term or
+                  browse all treatments.
+                </p>
+                <button
+                  onClick={resetFilters}
+                  className="mt-6 inline-flex items-center gap-2 bg-[var(--ink)] text-[var(--card)] text-[12.5px] font-semibold px-4 py-2 rounded-full hover:opacity-90 transition-opacity cursor-pointer"
+                >
+                  <span>View all treatments</span>
+                </button>
+              </div>
+            )}
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {filteredServices.map((service) => {
+                const highlight = serviceHighlights[service.slug];
+
+                return (
+                  <article
+                    key={service.slug}
+                    className="group flex flex-col rounded-2xl bg-[var(--card)] border border-[var(--line)] overflow-hidden transition-all duration-300 hover:border-[var(--ink)]/20 hover:shadow-[0_20px_40px_-24px_rgba(10,34,59,0.35)]"
+                  >
+                    <Link
+                      href={`/services/${service.slug}`}
+                      className="relative block aspect-[4/3] overflow-hidden bg-[var(--card-soft)]"
+                      tabIndex={-1}
+                      aria-hidden="true"
+                    >
+                      <img
+                        src={service.image}
+                        srcSet={serviceSrcSet(service.image)}
+                        sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        alt={service.imageAlt || service.name}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                      />
+
+                      {highlight?.badge && (
+                        <span className="absolute left-3.5 top-3.5 inline-flex items-center gap-1 rounded-full bg-white/95 px-2.5 py-1 text-[10.5px] font-semibold tracking-wide text-[#0e2439] shadow-sm">
+                          <Check className="w-3 h-3 text-[var(--accent)]" strokeWidth={3} />
+                          {highlight.badge}
+                        </span>
+                      )}
+                    </Link>
+
+                    <div className="flex flex-col flex-1 p-5 sm:p-6">
+                      <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[var(--ink-faint)]">
+                        {service.category}
+                      </p>
+
+                      <h3 className="mt-2 text-[18px] font-bold tracking-[-0.01em] leading-snug text-[var(--ink)]">
+                        <Link
+                          href={`/services/${service.slug}`}
+                          className="transition-colors hover:text-[var(--accent)] focus-visible:underline focus-visible:underline-offset-4"
+                        >
+                          {service.name}
+                        </Link>
+                      </h3>
+
+                      <p className="mt-2 text-[13px] leading-[1.65] text-[var(--ink-soft)] line-clamp-2">
+                        {service.summary}
+                      </p>
+
+                      {highlight?.features && highlight.features.length > 0 && (
+                        <ul className="mt-4 space-y-1.5">
+                          {highlight.features.map((feature) => (
+                            <li
+                              key={feature}
+                              className="flex items-start gap-2 text-[12.5px] leading-snug text-[var(--ink-soft)]"
+                            >
+                              <Check
+                                className="w-3.5 h-3.5 mt-px text-[var(--ink-faint)] shrink-0"
+                                strokeWidth={2.5}
+                              />
+                              <span>{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+
+                      <div className="mt-auto pt-5">
+                        <div className="flex items-center justify-between gap-3 border-t border-[var(--line)] pt-4">
+                          <Link
+                            href={`/services/${service.slug}`}
+                            className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-[var(--ink)] transition-colors hover:text-[var(--accent)]"
+                          >
+                            <span>View details</span>
+                            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5" />
+                          </Link>
+
+                          <button
+                            type="button"
+                            onClick={() => handleOpenBooking(service.name)}
+                            className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[var(--ink-soft)] border border-[var(--line)] hover:border-[var(--ink)]/30 hover:text-[var(--ink)] px-3 py-1.5 rounded-full transition-colors duration-200 cursor-pointer"
+                            title={`Book consultation for ${service.name}`}
+                          >
+                            <span>Book</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+
+            {/* ================= CLINIC ASSURANCE ================= */}
+            <div className="mt-14 border-t border-[var(--line)] pt-10">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 sm:gap-10">
+                <div className="flex items-start gap-3.5">
+                  <ShieldCheck className="w-5 h-5 mt-0.5 text-[var(--ink-faint)] shrink-0" strokeWidth={1.75} />
+                  <div>
+                    <h4 className="text-[13.5px] font-semibold text-[var(--ink)]">
+                      Hospital-grade sterilisation
+                    </h4>
+                    <p className="mt-1.5 text-[12.5px] leading-relaxed text-[var(--ink-soft)]">
+                      Autoclaved German instrumentation and class-B sterile operatories.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3.5">
+                  <ScanLine className="w-5 h-5 mt-0.5 text-[var(--ink-faint)] shrink-0" strokeWidth={1.75} />
+                  <div>
+                    <h4 className="text-[13.5px] font-semibold text-[var(--ink)]">
+                      Digital diagnostics
+                    </h4>
+                    <p className="mt-1.5 text-[12.5px] leading-relaxed text-[var(--ink-soft)]">
+                      Instant RVG digital imaging with 90% less radiation exposure.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3.5">
+                  <Stethoscope className="w-5 h-5 mt-0.5 text-[var(--ink-faint)] shrink-0" strokeWidth={1.75} />
+                  <div>
+                    <h4 className="text-[13.5px] font-semibold text-[var(--ink)]">
+                      Senior specialists
+                    </h4>
+                    <p className="mt-1.5 text-[12.5px] leading-relaxed text-[var(--ink-soft)]">
+                      Experienced endodontists, implantologists and orthodontists.
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>

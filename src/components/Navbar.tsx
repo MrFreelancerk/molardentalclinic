@@ -3,7 +3,22 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Phone, Calendar, Menu, X, ChevronDown, ArrowUpRight } from "lucide-react";
+import {
+  Phone,
+  Calendar,
+  Menu,
+  X,
+  ChevronDown,
+  ArrowUpRight,
+  Activity,
+  Anchor,
+  Smile,
+  AlignHorizontalDistributeCenter,
+  Crown,
+  ScanLine,
+  Sparkles,
+  Syringe,
+} from "lucide-react";
 import { serviceNav } from "@/data/services";
 import ThemeToggle from "./ThemeToggle";
 
@@ -15,6 +30,18 @@ const NAV_LINKS = [
   { name: "About", href: "/#about" },
   { name: "Contact", href: "/contact" },
 ];
+
+// One glyph per treatment, so the menu can be scanned by icon as well as text.
+const serviceIcons: Record<string, typeof Activity> = {
+  "root-canal-treatment": Activity,
+  "dental-implants": Anchor,
+  "invisible-aligners": Smile,
+  braces: AlignHorizontalDistributeCenter,
+  "zirconia-crowns": Crown,
+  "digital-rvg-x-ray": ScanLine,
+  "teeth-whitening": Sparkles,
+  "tooth-extraction": Syringe,
+};
 
 export default function Navbar({ onOpenBooking }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -149,23 +176,33 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
                   id="services-menu"
                   className="absolute left-1/2 top-full -translate-x-1/2 pt-4 w-[34rem]"
                 >
-                  <div className="rounded-2xl border border-[var(--line)] bg-[var(--card)] p-3 shadow-xl shadow-slate-900/10">
-                    <div className="grid grid-cols-2 gap-1">
-                      {serviceNav.map((service) => (
-                        <Link
-                          key={service.slug}
-                          href={`/services/${service.slug}`}
-                          onClick={() => setServicesOpen(false)}
-                          className="group rounded-xl px-3 py-2.5 transition-colors hover:bg-[var(--card-soft)]"
-                        >
-                          <span className="block text-[13px] font-semibold text-[var(--ink)] group-hover:text-[#2675D8]">
-                            {service.name}
-                          </span>
-                          <span className="block text-[11px] text-[var(--ink-soft)]">
-                            {service.category}
-                          </span>
-                        </Link>
-                      ))}
+                  <div className="rounded-none border border-[var(--line)] bg-[var(--card)] p-3 shadow-xl shadow-slate-900/10">
+                    <div className="grid grid-cols-2 gap-x-2 gap-y-1">
+                      {serviceNav.map((service) => {
+                        const Icon = serviceIcons[service.slug] ?? Activity;
+                        return (
+                          <Link
+                            key={service.slug}
+                            href={`/services/${service.slug}`}
+                            onClick={() => setServicesOpen(false)}
+                            className="group flex items-start gap-3 px-2.5 py-2.5 transition-colors"
+                          >
+                            <Icon
+                              aria-hidden="true"
+                              strokeWidth={1.6}
+                              className="mt-0.5 w-4 h-4 shrink-0 text-[var(--ink-faint)] transition-colors group-hover:text-[#2675D8]"
+                            />
+                            <span className="min-w-0">
+                              <span className="block text-[13px] font-semibold text-[var(--ink)] transition-colors group-hover:text-[#2675D8]">
+                                {service.name}
+                              </span>
+                              <span className="block text-[11px] text-[var(--ink-soft)]">
+                                {service.category}
+                              </span>
+                            </span>
+                          </Link>
+                        );
+                      })}
                     </div>
                     <div className="mt-2 flex items-center justify-between border-t border-[var(--line)] px-3 pt-3 pb-1">
                       <span className="text-[11px] text-[var(--ink-soft)]">

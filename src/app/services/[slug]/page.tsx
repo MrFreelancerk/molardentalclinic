@@ -8,6 +8,10 @@ type PageProps = {
   params: Promise<{ slug: string }>;
 };
 
+// These pages are fully prerendered from `generateStaticParams`, so resolving
+// params on the server is intentional rather than a slow client navigation.
+export const instant = false;
+
 export function generateStaticParams() {
   return services.map((service) => ({ slug: service.slug }));
 }

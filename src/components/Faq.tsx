@@ -47,9 +47,8 @@ const faqs = [
 ];
 
 export default function Faq() {
-  const [openIndexes, setOpenIndexes] = useState<number[]>(
-    faqs.map((_, index) => index)
-  );
+  // All answers start collapsed; visitors open only what they need.
+  const [openIndexes, setOpenIndexes] = useState<number[]>([]);
 
   const toggle = (index: number) => {
     setOpenIndexes((current) =>

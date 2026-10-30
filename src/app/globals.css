@@ -37,6 +37,7 @@
   --blue-soft: #EEF4FC;
   --violet-soft: #F4F0FC;
   --peach-soft: #FDF2E7;
+  --gold: #D8A31A;
 }
 
 .dark {
@@ -57,6 +58,7 @@
   --blue-soft: #0E2233;
   --violet-soft: #1A1630;
   --peach-soft: #241A11;
+  --gold: #E9BE4A;
 }
 
 :root {
@@ -97,4 +99,78 @@ h1, h2, h3, h4, h5, h6 {
 }
 .dark ::-webkit-scrollbar-thumb {
   background: #2A3B4C;
+}
+
+/* ---------------------------------------------------------------------------
+   Shared tokens for the services + contact pages.
+   Those pages were built on the single-accent system and read these names.
+   The home page keeps the original palette above untouched.
+--------------------------------------------------------------------------- */
+:root {
+  --accent: #2675D8;
+  --accent-strong: #1C5EB0;
+  --on-accent: #FFFFFF;
+  --navy: #123B65;
+  --navy-soft: #173F6B;
+  --line-strong: #CFDDEA;
+  --accent-soft: #EAF2FB;
+}
+
+.dark {
+  --accent: #58A4E6;
+  --accent-strong: #86BFF0;
+  --on-accent: #06121D;
+  --navy: #0A223B;
+  --navy-soft: #11304F;
+  --line-strong: #2D3F50;
+}
+
+.container-page {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .container-page {
+    padding-inline: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container-page {
+    padding-inline: 3.5rem;
+  }
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* One visible focus ring for keyboard users on every interactive element. */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

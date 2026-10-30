@@ -29,8 +29,8 @@ export default function Reviews() {
   ];
 
   return (
-    <section id="reviews" className="py-24 sm:py-28 bg-[var(--page)] border-t border-b border-[var(--line)]">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="reviews" className="py-24 sm:py-28 bg-[var(--page)] border-t border-b border-[var(--line)] scroll-mt-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="text-center max-w-xl mx-auto mb-14 sm:mb-16">
@@ -47,15 +47,15 @@ export default function Reviews() {
           {reviews.map((review, idx) => (
             <div
               key={idx}
-              className="bg-[var(--card)] rounded-xl p-6 sm:p-7 border border-[var(--line)] flex flex-col justify-between shadow-none transition-all"
+              className="bg-[var(--card)] rounded-none p-6 sm:p-7 border border-[var(--line)] flex flex-col justify-between shadow-none transition-colors duration-200 hover:border-[var(--line-strong)]"
             >
               <div>
-                {/* 5 Solid Black Stars */}
+                {/* 5 Golden Stars */}
                 <div className="flex items-center gap-1 mb-4">
                   {[...Array(5)].map((_, i) => (
                     <svg
                       key={i}
-                      className="w-4 h-4 fill-[var(--ink)] text-[var(--ink)]"
+                      className="w-4 h-4 fill-[var(--gold)] text-[var(--gold)]"
                       viewBox="0 0 24 24"
                       xmlns="http://www.w3.org/2000/svg"
                     >
@@ -70,13 +70,13 @@ export default function Reviews() {
                 </h3>
 
                 {/* Real Review Text */}
-                <p className="text-[13px] sm:text-[14px] text-[var(--ink)] leading-relaxed font-normal mb-6">
+                <p className="text-[13px] sm:text-[14px] text-[var(--ink)] leading-relaxed font-normal">
                   &ldquo;{review.text}&rdquo;
                 </p>
               </div>
 
               {/* Patient Info (Pure Clean Text - No Fake Photos) */}
-              <div className="pt-3 border-t border-[var(--line)]">
+              <div className="mt-6">
                 <h4 className="text-sm font-bold text-[var(--ink)] leading-tight">
                   {review.name}
                 </h4>

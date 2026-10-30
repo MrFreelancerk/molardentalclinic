@@ -6,100 +6,80 @@ interface PatientJourneyProps {
   onOpenBooking: () => void;
 }
 
-export default function PatientJourney({ onOpenBooking }: PatientJourneyProps) {
-  const steps = [
-    {
-      num: "01",
-      title: "Easy 60-Sec Booking",
-      desc: "Pick your preferred time online or message us directly on WhatsApp. Immediate confirmation.",
-      icon: CalendarCheck,
-    },
-    {
-      num: "02",
-      title: "3D Scan & Discussion",
-      desc: "We perform high-res 3D digital imaging to show you exactly what is happening in your mouth.",
-      icon: ScanFace,
-    },
-    {
-      num: "03",
-      title: "Gentle, Pain-Free Care",
-      desc: "Relax in our ergonomic chairs with computer anesthesia and music while our specialists treat you.",
-      icon: HeartHandshake,
-    },
-    {
-      num: "04",
-      title: "Smile With Confidence",
-      desc: "Walk out with a restored, healthy smile backed by our quality guarantee and follow-up support.",
-      icon: Sparkles,
-    },
-  ];
+const STEPS = [
+  {
+    title: "Book in a minute",
+    description:
+      "Pick a time online or message us on WhatsApp. You get an immediate confirmation.",
+    icon: CalendarCheck,
+  },
+  {
+    title: "Scan and discuss",
+    description:
+      "Digital imaging shows you exactly what is happening, and we explain every option.",
+    icon: ScanFace,
+  },
+  {
+    title: "Gentle treatment",
+    description:
+      "Comfortable operatories, effective anaesthesia and specialists who work at your pace.",
+    icon: HeartHandshake,
+  },
+  {
+    title: "Leave with confidence",
+    description:
+      "A restored smile, clear aftercare and follow-up support if you ever need us again.",
+    icon: Sparkles,
+  },
+];
 
+export default function PatientJourney({ onOpenBooking }: PatientJourneyProps) {
   return (
-    <section id="patient-journey" className="py-24 bg-[var(--page)] relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 bg-[var(--card-soft)] border border-[var(--line)] text-[#2675D8] px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-4">
-            <Sparkles className="w-3.5 h-3.5 text-[#39A852]" />
-            What to Expect
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[var(--ink)] tracking-tight mb-4">
-            Your Seamless Patient Journey
+    <section
+      id="patient-journey"
+      className="scroll-mt-20 border-b border-[var(--line)] bg-[var(--card)] py-20 sm:py-24"
+    >
+      <div className="container-page">
+        <div className="max-w-xl">
+          <p className="eyebrow">What to expect</p>
+          <h2 className="mt-3 text-[30px] font-semibold leading-[1.1] tracking-[-0.03em] text-[var(--ink)] sm:text-[42px]">
+            Four simple steps.
           </h2>
-          <p className="text-[var(--ink-soft)] text-base sm:text-lg">
-            From your very first greeting at reception to your final checkup, here is how we ensure an effortless visit.
+          <p className="mt-4 text-[13.5px] leading-relaxed text-[var(--ink-soft)]">
+            From your first call to your final checkup, here is how a visit at Molar Dental works.
           </p>
         </div>
 
-        {/* 4 Steps Timeline Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative">
-          {steps.map((step, idx) => {
+        <ol className="mt-12 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+          {STEPS.map((step, index) => {
             const Icon = step.icon;
             return (
-              <div
-                key={idx}
-                className="relative bg-[var(--card-soft)] rounded-3xl p-7 border border-[var(--line)]/80 hover:border-[#2675D8] transition-all hover:-translate-y-1 hover:shadow-lg flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-6">
-                    <span className="text-3xl font-black text-[#2675D8]/25 font-mono">
-                      {step.num}
-                    </span>
-                    <div className="w-12 h-12 rounded-2xl bg-[var(--card)] text-[#2675D8] shadow-sm flex items-center justify-center">
-                      <Icon className="w-6 h-6 stroke-[2]" />
-                    </div>
-                  </div>
-
-                  <h3 className="text-lg font-bold text-[var(--ink)] mb-2">
-                    {step.title}
-                  </h3>
-                  <p className="text-xs text-[var(--ink-soft)] leading-relaxed">
-                    {step.desc}
-                  </p>
+              <li key={step.title} className="relative border-t border-[var(--line)] pt-5">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--ink-faint)]">
+                    Step {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <Icon className="h-4.5 w-4.5 text-[var(--accent)]" strokeWidth={1.75} aria-hidden="true" />
                 </div>
-
-                <div className="pt-6 mt-6 border-t border-[var(--line)]/60 flex items-center gap-1.5 text-xs font-bold text-[#39A852]">
-                  <span>Step {idx + 1} of 4</span>
-                </div>
-              </div>
+                <h3 className="mt-4 text-[15px] font-semibold text-[var(--ink)]">{step.title}</h3>
+                <p className="mt-1.5 text-[13px] leading-relaxed text-[var(--ink-soft)]">
+                  {step.description}
+                </p>
+              </li>
             );
           })}
-        </div>
+        </ol>
 
-        {/* Bottom CTA Button */}
-        <div className="text-center mt-12">
+        <div className="mt-12">
           <button
             onClick={onOpenBooking}
-            className="inline-flex items-center gap-2 bg-[#2675D8] hover:bg-[#1C5EB0] text-white font-semibold text-sm px-8 py-3.5 rounded-full shadow-lg shadow-[#2675D8]/20 transition-all cursor-pointer"
+            className="inline-flex h-11 items-center gap-2 rounded-full bg-[var(--accent)] px-5 text-[13px] font-semibold text-[var(--on-accent)] transition-colors hover:bg-[var(--accent-strong)] cursor-pointer"
           >
-            <span>Start Your Journey Today</span>
-            <ArrowRight className="w-4 h-4" />
+            Start your visit
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </button>
         </div>
-
       </div>
     </section>
   );
 }
-

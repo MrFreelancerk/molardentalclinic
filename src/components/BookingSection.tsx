@@ -10,7 +10,7 @@ export default function BookingSection({ initialService }: BookingSectionProps) 
   const googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=Molar+Dental+Hospital+Near+Shivaji+Statue+Junction+Indresham+Road+Bachuguda+Patancheru+502319";
 
   return (
-    <section id="location" className="py-20 sm:py-28 bg-[#090C10] text-white relative">
+    <section id="location" className="py-20 sm:py-28 bg-[#090C10] text-white relative scroll-mt-20">
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
