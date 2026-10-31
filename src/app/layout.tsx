@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import WhatsAppFloat from "@/components/WhatsAppFloat";
 
 export const metadata: Metadata = {
   title: "Molar Dental Hospital | Dental Hospital in Indresham, Patancheru",
@@ -34,6 +35,8 @@ export default function RootLayout({
       </head>
       <body className="antialiased min-h-screen bg-[var(--page)] text-[var(--ink)] selection:bg-[#2675D8] selection:text-white">
         {children}
+        {/* Available on every route */}
+        <WhatsAppFloat />
       </body>
     </html>
   );

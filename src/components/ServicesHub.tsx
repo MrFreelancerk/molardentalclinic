@@ -156,7 +156,17 @@ export default function ServicesHub() {
         <section className="sticky top-16 z-20 bg-[var(--card)]/95 backdrop-blur-md border-b border-[var(--line)]">
           <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 py-3.5">
-              <div className="flex items-center gap-1 overflow-x-auto no-scrollbar -mx-1 px-1">
+              {/* Scrolls sideways on narrow screens; the right fade signals more
+                  categories without needing a visible scrollbar */}
+              <div
+                className="flex items-center gap-1 overflow-x-auto no-scrollbar -mx-1 px-1"
+                style={{
+                  maskImage:
+                    "linear-gradient(to right, #000 0, #000 calc(100% - 24px), transparent 100%)",
+                  WebkitMaskImage:
+                    "linear-gradient(to right, #000 0, #000 calc(100% - 24px), transparent 100%)",
+                }}
+              >
                 {categoryFilters.map((cat) => {
                   const isActive = activeCategory === cat;
                   return (
@@ -164,7 +174,7 @@ export default function ServicesHub() {
                       key={cat}
                       onClick={() => setActiveCategory(cat)}
                       aria-pressed={isActive}
-                      className={`shrink-0 px-3.5 py-2 rounded-full text-[12.5px] whitespace-nowrap transition-colors duration-200 cursor-pointer ${
+                      className={`shrink-0 px-3.5 py-2 rounded-none text-[12.5px] whitespace-nowrap transition-colors duration-200 cursor-pointer ${
                         isActive
                           ? "bg-[var(--ink)] text-[var(--card)] font-semibold"
                           : "text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--card-soft)] font-medium"
@@ -184,7 +194,7 @@ export default function ServicesHub() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search treatments"
                   aria-label="Search treatments"
-                  className="w-full h-10 pl-9 pr-9 bg-[var(--page)] border border-[var(--line)] rounded-full text-[13px] text-[var(--ink)] placeholder:text-[var(--ink-faint)] focus:outline-none focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/15 transition-colors"
+                  className="w-full h-10 pl-9 pr-9 bg-[var(--page)] border border-[var(--line)] rounded-none text-[13px] text-[var(--ink)] placeholder:text-[var(--ink-faint)] focus:outline-none focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/15 transition-colors"
                 />
                 {searchQuery && (
                   <button
@@ -204,10 +214,10 @@ export default function ServicesHub() {
         <section className="py-10 sm:py-14 lg:py-16">
           <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14">
             <div className="flex items-baseline justify-between gap-4 mb-7">
-              <p className="text-[12.5px] text-[var(--ink-soft)]">
+              <p className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-[var(--ink-faint)]">
                 {filteredServices.length} treatment{filteredServices.length === 1 ? "" : "s"}
                 {activeCategory !== "All Treatments" && (
-                  <span className="text-[var(--ink-faint)]"> &middot; {activeCategory}</span>
+                  <span className="text-[var(--ink-faint)]/75"> &middot; {activeCategory}</span>
                 )}
               </p>
 
@@ -222,7 +232,7 @@ export default function ServicesHub() {
             </div>
 
             {filteredServices.length === 0 && (
-              <div className="py-16 px-6 text-center bg-[var(--card)] rounded-2xl border border-[var(--line)] max-w-md mx-auto">
+              <div className="py-16 px-6 text-center bg-[var(--card)] rounded-none border border-[var(--line)] max-w-md mx-auto">
                 <Stethoscope className="w-8 h-8 text-[var(--ink-faint)] mx-auto" strokeWidth={1.5} />
                 <h3 className="mt-4 text-base font-semibold text-[var(--ink)]">
                   No treatments found
@@ -233,7 +243,7 @@ export default function ServicesHub() {
                 </p>
                 <button
                   onClick={resetFilters}
-                  className="mt-6 inline-flex items-center gap-2 bg-[var(--ink)] text-[var(--card)] text-[12.5px] font-semibold px-4 py-2 rounded-full hover:opacity-90 transition-opacity cursor-pointer"
+                  className="mt-6 inline-flex items-center gap-2 bg-[var(--ink)] text-[var(--card)] text-[12.5px] font-semibold px-4 py-2 rounded-none hover:opacity-90 transition-opacity cursor-pointer"
                 >
                   <span>View all treatments</span>
                 </button>
@@ -247,8 +257,13 @@ export default function ServicesHub() {
                 return (
                   <article
                     key={service.slug}
-                    className="group flex flex-col rounded-2xl bg-[var(--card)] border border-[var(--line)] overflow-hidden transition-all duration-300 hover:border-[var(--ink)]/20 hover:shadow-[0_20px_40px_-24px_rgba(10,34,59,0.35)]"
+                    className="group relative flex flex-col rounded-none bg-[var(--card)] border border-[var(--line)] overflow-hidden transition-all duration-300 hover:border-[var(--ink)]/20 hover:shadow-[0_20px_40px_-24px_rgba(10,34,59,0.35)]"
                   >
+                    {/* Accent rule that draws across the top edge on hover */}
+                    <span
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[2px] origin-left scale-x-0 bg-[#2675D8] transition-transform duration-300 ease-out group-hover:scale-x-100"
+                    />
                     <Link
                       href={`/services/${service.slug}`}
                       className="relative block aspect-[4/3] overflow-hidden bg-[var(--card-soft)]"
@@ -266,7 +281,7 @@ export default function ServicesHub() {
                       />
 
                       {highlight?.badge && (
-                        <span className="absolute left-3.5 top-3.5 inline-flex items-center gap-1 rounded-full bg-white/95 px-2.5 py-1 text-[10.5px] font-semibold tracking-wide text-[#0e2439] shadow-sm">
+                        <span className="absolute left-3.5 top-3.5 inline-flex items-center gap-1 rounded-none bg-white/95 px-2.5 py-1 text-[10.5px] font-semibold tracking-wide text-[#0e2439] shadow-sm">
                           <Check className="w-3 h-3 text-[var(--accent)]" strokeWidth={3} />
                           {highlight.badge}
                         </span>
@@ -287,7 +302,7 @@ export default function ServicesHub() {
                         </Link>
                       </h3>
 
-                      <p className="mt-2 text-[13px] leading-[1.65] text-[var(--ink-soft)] line-clamp-2">
+                      <p className="mt-2 text-[13px] leading-[1.65] text-[var(--ink-soft)]">
                         {service.summary}
                       </p>
 
@@ -321,7 +336,7 @@ export default function ServicesHub() {
                           <button
                             type="button"
                             onClick={() => handleOpenBooking(service.name)}
-                            className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[var(--ink-soft)] border border-[var(--line)] hover:border-[var(--ink)]/30 hover:text-[var(--ink)] px-3 py-1.5 rounded-full transition-colors duration-200 cursor-pointer"
+                            className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-[var(--ink)] border border-[var(--line)] hover:border-[var(--ink)] hover:bg-[var(--ink)] hover:text-[var(--card)] px-3.5 py-2 rounded-none transition-colors duration-200 cursor-pointer"
                             title={`Book consultation for ${service.name}`}
                           >
                             <span>Book</span>

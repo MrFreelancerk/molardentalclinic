@@ -63,7 +63,7 @@ export default function Faq() {
       <div className="max-w-2xl mx-auto px-4 sm:px-6">
 
         {/* Section Header */}
-        <div className="text-center mb-10 sm:mb-12">
+        <div data-reveal className="text-center mb-10 sm:mb-12">
           <h2 className="text-3xl sm:text-4xl font-bold text-[var(--ink)] tracking-tight mb-3">
             FAQs
           </h2>
@@ -73,13 +73,14 @@ export default function Faq() {
         </div>
 
         {/* FAQ Cards */}
-        <div className="space-y-4">
+        <div data-reveal-stagger className="space-y-4">
           {faqs.map((faq, index) => {
             const isOpen = openIndexes.includes(index);
 
             return (
               <div
                 key={faq.question}
+                data-reveal
                 className="bg-[var(--card)] rounded-lg border border-[var(--line)] px-5 py-4 sm:px-6 sm:py-5 shadow-none"
               >
                 <button
@@ -110,7 +111,7 @@ export default function Faq() {
         </div>
 
         {/* Need More Help */}
-        <div className="text-center mt-14 sm:mt-16">
+        <div data-reveal className="text-center mt-14 sm:mt-16">
           <h3 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight mb-2">
             Need more help?
           </h3>

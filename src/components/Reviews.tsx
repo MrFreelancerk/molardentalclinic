@@ -33,7 +33,7 @@ export default function Reviews() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-xl mx-auto mb-14 sm:mb-16">
+        <div data-reveal className="text-center max-w-xl mx-auto mb-14 sm:mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold text-[var(--ink)] tracking-tight mb-3">
             Patient stories
           </h2>
@@ -43,10 +43,11 @@ export default function Reviews() {
         </div>
 
         {/* 4 Clean Cards Grid (100% Real Reviews from molardental.in - No Fake Avatars) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div data-reveal-stagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {reviews.map((review, idx) => (
             <div
               key={idx}
+              data-reveal
               className="bg-[var(--card)] rounded-none p-6 sm:p-7 border border-[var(--line)] flex flex-col justify-between shadow-none transition-colors duration-200 hover:border-[var(--line-strong)]"
             >
               <div>

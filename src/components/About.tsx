@@ -72,7 +72,7 @@ export default function About() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Exact Header Alignment */}
-        <div className="text-center max-w-2xl mx-auto mb-12 sm:mb-14">
+        <div data-reveal className="text-center max-w-2xl mx-auto mb-12 sm:mb-14">
           <p className="text-xs font-semibold text-[var(--ink)] mb-2">
             Why
           </p>
@@ -85,11 +85,12 @@ export default function About() {
         </div>
 
         {/* 6 Cards Grid (Exact Borders, Radius, Colors & Images) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+        <div data-reveal-stagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {cards.map((card, idx) => (
             <Link
               key={idx}
               href={card.href}
+              data-reveal
               className="group relative flex flex-col bg-[var(--card)] rounded-none border border-[var(--line)] overflow-hidden transition-colors duration-200 hover:border-[#123B65] focus-visible:border-[#123B65]"
             >
               {/* Sharp accent rule that draws across the top edge on hover */}

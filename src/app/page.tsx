@@ -12,6 +12,7 @@ import Faq from "@/components/Faq";
 import BookingSection from "@/components/BookingSection";
 import Footer from "@/components/Footer";
 import AppointmentModal from "@/components/AppointmentModal";
+import ScrollReveal from "@/components/ScrollReveal";
 
 export default function Home() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
@@ -32,6 +33,9 @@ export default function Home() {
     <div className="relative min-h-screen bg-[var(--page)]">
       {/* Floating Pill Navbar */}
       <Navbar onOpenBooking={() => handleOpenBooking("Comprehensive Oral Checkup")} />
+
+      {/* Scroll reveal for every section below the hero */}
+      <ScrollReveal />
 
       {/* Main Sections */}
       <main>

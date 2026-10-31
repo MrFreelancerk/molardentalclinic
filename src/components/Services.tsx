@@ -31,7 +31,7 @@ export default function Services({ onSelectService }: ServicesProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* ================= HEADER: SPLIT LAYOUT (LEFT TITLE, RIGHT DESC & CTA) ================= */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16 pb-8 border-b border-[var(--line)]/70">
+        <div data-reveal className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16 pb-8 border-b border-[var(--line)]/70">
           
           {/* Left: Bold Title */}
           <div className="max-w-xl">
@@ -61,17 +61,17 @@ export default function Services({ onSelectService }: ServicesProps) {
         </div>
 
         {/* Subtle Section Tag Divider */}
-        <div className="flex items-center justify-center gap-3 mb-10 text-[11px] font-bold uppercase tracking-widest text-[var(--ink-faint)]">
+        <div data-reveal className="flex items-center justify-center gap-3 mb-10 text-[11px] font-bold uppercase tracking-widest text-[var(--ink-faint)]">
           <span className="w-8 h-px bg-[var(--line)]" />
           <span>our services</span>
           <span className="w-8 h-px bg-[var(--line)]" />
         </div>
 
         {/* ================= BENTO GRID: PASTEL CARDS & CLINIC PHOTOS ================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+        <div data-reveal-stagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
           
           {/* Card 1: Soft Pastel Sage Green (Cavity & Scaling) */}
-          <div className="bg-[var(--tint-green)] rounded-3xl p-7 flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-300 group">
+          <div data-reveal className="bg-[var(--tint-green)] rounded-3xl p-7 flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-300 group">
             <div>
               <div className="flex items-center justify-between mb-8">
                 <div className="w-12 h-12 rounded-full bg-white/70 backdrop-blur-xs flex items-center justify-center text-[var(--ink)] shadow-2xs">
@@ -100,7 +100,7 @@ export default function Services({ onSelectService }: ServicesProps) {
           </div>
 
           {/* Card 2: Photo Card (Root Canal Therapy in Action) */}
-          <div className="relative rounded-3xl overflow-hidden group shadow-xs hover:shadow-lg transition-all duration-300 min-h-[300px] flex flex-col justify-end">
+          <div data-reveal className="relative rounded-3xl overflow-hidden group shadow-xs hover:shadow-lg transition-all duration-300 min-h-[300px] flex flex-col justify-end">
             <img
               src="/services/root-canal-procedure-1200.webp"
               srcSet="/services/root-canal-procedure-640.webp 640w, /services/root-canal-procedure-1200.webp 1200w"
@@ -133,7 +133,7 @@ export default function Services({ onSelectService }: ServicesProps) {
           </div>
 
           {/* Card 3: Soft Pastel Lavender / Lilac (Root Canal) */}
-          <div className="bg-[var(--tint-violet)] rounded-3xl p-7 flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-300 group">
+          <div data-reveal className="bg-[var(--tint-violet)] rounded-3xl p-7 flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-300 group">
             <div>
               <div className="flex items-center justify-between mb-8">
                 <div className="w-12 h-12 rounded-full bg-white/70 backdrop-blur-xs flex items-center justify-center text-[var(--ink)] shadow-2xs">
@@ -162,7 +162,7 @@ export default function Services({ onSelectService }: ServicesProps) {
           </div>
 
           {/* Card 4: Photo Card (Teeth Whitening Procedure) */}
-          <div className="relative rounded-3xl overflow-hidden group shadow-xs hover:shadow-lg transition-all duration-300 min-h-[300px] flex flex-col justify-end">
+          <div data-reveal className="relative rounded-3xl overflow-hidden group shadow-xs hover:shadow-lg transition-all duration-300 min-h-[300px] flex flex-col justify-end">
             <img
               src="/services/teeth-whitening-1200.webp"
               srcSet="/services/teeth-whitening-640.webp 640w, /services/teeth-whitening-1200.webp 1200w"
@@ -193,7 +193,7 @@ export default function Services({ onSelectService }: ServicesProps) {
           </div>
 
           {/* Card 5: Soft Pastel Sky Blue (Clear Invisible Aligners) */}
-          <div className="bg-[var(--tint-blue)] rounded-3xl p-7 flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-300 group">
+          <div data-reveal className="bg-[var(--tint-blue)] rounded-3xl p-7 flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-300 group">
             <div>
               <div className="flex items-center justify-between mb-8">
                 <div className="w-12 h-12 rounded-full bg-white/70 backdrop-blur-xs flex items-center justify-center text-[var(--ink)] shadow-2xs">
@@ -222,7 +222,7 @@ export default function Services({ onSelectService }: ServicesProps) {
           </div>
 
           {/* Card 6: Photo Card (Dental Implants & 3D Precision) */}
-          <div className="relative rounded-3xl overflow-hidden group shadow-xs hover:shadow-lg transition-all duration-300 min-h-[300px] flex flex-col justify-end">
+          <div data-reveal className="relative rounded-3xl overflow-hidden group shadow-xs hover:shadow-lg transition-all duration-300 min-h-[300px] flex flex-col justify-end">
             <img
               src="/services/dental-implants-1200.webp"
               srcSet="/services/dental-implants-640.webp 640w, /services/dental-implants-1200.webp 1200w"
@@ -253,7 +253,7 @@ export default function Services({ onSelectService }: ServicesProps) {
           </div>
 
           {/* Card 7: Soft Pastel Peach / Warm Cream (Zirconia & Veneers) */}
-          <div className="bg-[var(--tint-peach)] rounded-3xl p-7 flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-300 group">
+          <div data-reveal className="bg-[var(--tint-peach)] rounded-3xl p-7 flex flex-col justify-between shadow-xs hover:shadow-md transition-all duration-300 group">
             <div>
               <div className="flex items-center justify-between mb-8">
                 <div className="w-12 h-12 rounded-full bg-white/70 backdrop-blur-xs flex items-center justify-center text-[var(--ink)] shadow-2xs">
@@ -282,7 +282,7 @@ export default function Services({ onSelectService }: ServicesProps) {
           </div>
 
           {/* Card 8: Photo Card (Clear Aligner Confident Smile) */}
-          <div className="relative rounded-3xl overflow-hidden group shadow-xs hover:shadow-lg transition-all duration-300 min-h-[300px] flex flex-col justify-end">
+          <div data-reveal className="relative rounded-3xl overflow-hidden group shadow-xs hover:shadow-lg transition-all duration-300 min-h-[300px] flex flex-col justify-end">
             <img
               src="/services/clear-aligners-1200.webp"
               srcSet="/services/clear-aligners-640.webp 640w, /services/clear-aligners-1200.webp 1200w"

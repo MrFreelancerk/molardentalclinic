@@ -16,7 +16,7 @@ export default function BookingSection({ initialService }: BookingSectionProps) 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* Left Column: Contact Details */}
-          <div className="lg:col-span-5 flex flex-col justify-center">
+          <div data-reveal className="lg:col-span-5 flex flex-col justify-center">
             
             {/* Header */}
             <div className="mb-10 sm:mb-12">
@@ -126,7 +126,7 @@ export default function BookingSection({ initialService }: BookingSectionProps) 
           </div>
 
           {/* Right Column: Large Architectural Image Frame */}
-          <div className="lg:col-span-7">
+          <div data-reveal className="lg:col-span-7">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-[#161B22] aspect-[4/3] sm:aspect-[16/11] lg:h-[500px] w-full">
               <img
                 src="/hospital-building.jpg"

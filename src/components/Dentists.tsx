@@ -69,7 +69,7 @@ export default function Dentists({ onOpenBooking }: DentistsProps) {
     <section id="dentists" className="py-20 sm:py-24 bg-[var(--page)] border-t border-b border-[var(--line)]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="mb-12 sm:mb-14 max-w-2xl">
+        <div data-reveal className="mb-12 sm:mb-14 max-w-2xl">
           <h2 className="text-3xl sm:text-4xl font-bold text-[var(--ink)] tracking-tight">
             Meet The Dentists
           </h2>
@@ -79,7 +79,7 @@ export default function Dentists({ onOpenBooking }: DentistsProps) {
         </div>
 
         {/* Desktop — one row, the hovered card widens and takes space from its neighbours */}
-        <div className="hidden lg:flex h-[420px] gap-4">
+        <div data-reveal className="hidden lg:flex h-[420px] gap-4">
           {doctors.map((doctor, index) => {
             const isOpen = openIdx === index;
 
@@ -176,7 +176,7 @@ export default function Dentists({ onOpenBooking }: DentistsProps) {
         </div>
 
         {/* Mobile / tablet — 2-up grid, tap opens the detail dialog */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 lg:hidden">
+        <div data-reveal className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 lg:hidden">
           {doctors.map((doctor, index) => (
             <button
               key={doctor.name}

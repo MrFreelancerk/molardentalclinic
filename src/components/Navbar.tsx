@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -11,13 +11,6 @@ import {
   ChevronDown,
   ArrowUpRight,
   Activity,
-  Anchor,
-  Smile,
-  AlignHorizontalDistributeCenter,
-  Crown,
-  ScanLine,
-  Sparkles,
-  Syringe,
 } from "lucide-react";
 import { serviceNav } from "@/data/services";
 import ThemeToggle from "./ThemeToggle";
@@ -31,17 +24,31 @@ const NAV_LINKS = [
   { name: "Contact", href: "/contact" },
 ];
 
-// One glyph per treatment, so the menu can be scanned by icon as well as text.
-const serviceIcons: Record<string, typeof Activity> = {
-  "root-canal-treatment": Activity,
-  "dental-implants": Anchor,
-  "invisible-aligners": Smile,
-  braces: AlignHorizontalDistributeCenter,
-  "zirconia-crowns": Crown,
-  "digital-rvg-x-ray": ScanLine,
-  "teeth-whitening": Sparkles,
-  "tooth-extraction": Syringe,
+// One dental line-art glyph per treatment (files in public/icons), so the menu
+// can be scanned by icon as well as text.
+const serviceIcons: Record<string, string> = {
+  "root-canal-treatment": "root-canal-treatment.svg",
+  "dental-implants": "dental-implants.svg",
+  "invisible-aligners": "invisible-aligners.svg",
+  braces: "braces.svg",
+  "zirconia-crowns": "zirconia-crowns.svg",
+  "digital-rvg-x-ray": "digital-rvg-x-ray.svg",
+  "teeth-whitening": "teeth-whitening.svg",
+  "tooth-extraction": "tooth-extraction.svg",
 };
+
+// The artwork is solid black on transparent, so it is used as a mask and tinted
+// with the theme ink colour instead of being shown as a flat black image.
+const iconMask = (file: string): CSSProperties => ({
+  maskImage: `url(/icons/${file})`,
+  WebkitMaskImage: `url(/icons/${file})`,
+  maskRepeat: "no-repeat",
+  WebkitMaskRepeat: "no-repeat",
+  maskPosition: "center",
+  WebkitMaskPosition: "center",
+  maskSize: "contain",
+  WebkitMaskSize: "contain",
+});
 
 export default function Navbar({ onOpenBooking }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -50,6 +57,12 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const servicesRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+
+  // The home hero is a light pastel composition, so while the bar is parked on it
+  // (top of the page, not yet scrolled) it switches to dark ink. Every other page
+  // opens on a navy hero, which keeps the white treatment.
+  const onLightHero = pathname === "/" && !isScrolled;
+  const onLight = isScrolled || onLightHero;
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 30);
@@ -97,7 +110,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
     `text-sm sm:text-[15px] font-semibold tracking-wide transition-colors relative py-1 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:transition-all ${
       active ? "after:w-full" : "after:w-0 hover:after:w-full"
     } ${
-      isScrolled
+      onLight
         ? active
           ? "text-[#2675D8] after:bg-[#2675D8]"
           : "text-[var(--ink-soft)] hover:text-[#2675D8] after:bg-[#2675D8]"
@@ -111,7 +124,9 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
       className={`fixed top-0 left-0 right-0 z-50 w-full transition-colors duration-200 py-1.5 sm:py-2 px-6 sm:px-10 lg:px-14 flex items-center ${
         isScrolled
           ? "bg-[var(--card)]/95 backdrop-blur-md border-b border-[var(--line)] shadow-sm text-[var(--ink)]"
-          : "bg-black/40 backdrop-blur-sm border-b border-white/10 text-white"
+          : onLightHero
+            ? "bg-white/25 backdrop-blur-md border-b border-white/40 text-[#10313A]"
+            : "bg-black/40 backdrop-blur-sm border-b border-white/10 text-white"
       }`}
     >
       <div className="w-full flex items-center justify-between">
@@ -119,9 +134,9 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
         {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-2 group shrink-0" aria-label="Molar Dental Hospital — home">
           <img
-            src={isScrolled ? "/molar-logo-dark.png" : "/molar-logo.png"}
+            src={onLight ? "/molar-logo-dark.png" : "/molar-logo.png"}
             alt="Molar Dental Hospital"
-            className="h-8 sm:h-9 md:h-10 w-auto object-contain transition-transform group-hover:scale-105"
+            className="h-7 min-[380px]:h-8 sm:h-9 md:h-10 w-auto object-contain transition-transform group-hover:scale-105"
           />
         </Link>
 
@@ -162,7 +177,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
                   aria-controls="services-menu"
                   aria-label="Toggle treatments menu"
                   className={`p-0.5 rounded transition-colors ${
-                    isScrolled ? "text-[var(--ink-soft)] hover:text-[#2675D8]" : "text-white/80 hover:text-white"
+                    onLight ? "text-[var(--ink-soft)] hover:text-[#2675D8]" : "text-white/80 hover:text-white"
                   }`}
                 >
                   <ChevronDown
@@ -179,7 +194,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
                   <div className="rounded-none border border-[var(--line)] bg-[var(--card)] p-3 shadow-xl shadow-slate-900/10">
                     <div className="grid grid-cols-2 gap-x-2 gap-y-1">
                       {serviceNav.map((service) => {
-                        const Icon = serviceIcons[service.slug] ?? Activity;
+                        const iconFile = serviceIcons[service.slug];
                         return (
                           <Link
                             key={service.slug}
@@ -187,11 +202,19 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
                             onClick={() => setServicesOpen(false)}
                             className="group flex items-start gap-3 px-2.5 py-2.5 transition-colors"
                           >
-                            <Icon
-                              aria-hidden="true"
-                              strokeWidth={1.6}
-                              className="mt-0.5 w-4 h-4 shrink-0 text-[var(--ink-faint)] transition-colors group-hover:text-[#2675D8]"
-                            />
+                            {iconFile ? (
+                              <span
+                                aria-hidden="true"
+                                style={iconMask(iconFile)}
+                                className="h-7 w-7 shrink-0 bg-[var(--ink-soft)] transition-colors group-hover:bg-[#2675D8]"
+                              />
+                            ) : (
+                              <Activity
+                                aria-hidden="true"
+                                strokeWidth={1.6}
+                                className="mt-0.5 w-4 h-4 shrink-0 text-[var(--ink-faint)] transition-colors group-hover:text-[#2675D8]"
+                              />
+                            )}
                             <span className="min-w-0">
                               <span className="block text-[13px] font-semibold text-[var(--ink)] transition-colors group-hover:text-[#2675D8]">
                                 {service.name}
@@ -239,46 +262,53 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
           </div>
         </nav>
 
-        {/* Right Action Buttons */}
-        <div className="hidden sm:flex items-center gap-3 shrink-0">
+        {/* Right Action Buttons — same breakpoint as the desktop nav links, so the
+            pill cluster and the compact icon row never render at the same time */}
+        <div className="hidden lg:flex items-center gap-3 shrink-0">
           <ThemeToggle
             className={
-              isScrolled
-                ? "bg-[var(--card-soft)] text-[var(--ink)] border-[var(--line)] hover:border-[#2675D8] hover:text-[#2675D8]"
-                : "bg-white/10 text-white border-white/25 hover:bg-white/20 backdrop-blur-md"
+              onLightHero
+                ? "bg-white/75 text-[#0C2A32] border-white/80 backdrop-blur-md hover:bg-white hover:border-[#0C2A32]/25"
+                : onLight
+                  ? "bg-[var(--card-soft)] text-[var(--ink)] border-[var(--line)] hover:border-[#2675D8] hover:text-[#2675D8]"
+                  : "bg-white/10 text-white border-white/25 hover:bg-white/20 backdrop-blur-md"
             }
           />
 
           <a
             href="tel:+919133933392"
             className={`inline-flex items-center gap-2 text-xs sm:text-[13px] font-semibold px-4.5 py-2.5 rounded-full border transition-all duration-200 ${
-              isScrolled
-                ? "bg-[var(--card-soft)] text-[var(--ink)] border-[var(--line)] hover:border-[#2675D8] hover:text-[#2675D8] hover:bg-[var(--card)] shadow-2xs"
-                : "bg-white/10 text-white border-white/25 hover:bg-white/20 backdrop-blur-md"
+              onLightHero
+                ? "bg-white/75 text-[#0C2A32] border-white/80 backdrop-blur-md hover:bg-white hover:border-[#0C2A32]/25"
+                : onLight
+                  ? "bg-[var(--card-soft)] text-[var(--ink)] border-[var(--line)] hover:border-[#2675D8] hover:text-[#2675D8] hover:bg-[var(--card)] shadow-2xs"
+                  : "bg-white/10 text-white border-white/25 hover:bg-white/20 backdrop-blur-md"
             }`}
           >
-            <Phone className={`w-3.5 h-3.5 ${isScrolled ? "text-[#39A852]" : "text-emerald-400"}`} />
+            <Phone className={`w-3.5 h-3.5 ${onLight ? "text-[#39A852]" : "text-emerald-400"}`} />
             <span>Call Now</span>
           </a>
 
           <button
             onClick={onOpenBooking}
             className={`inline-flex items-center gap-2 text-xs sm:text-[13px] font-bold px-5.5 py-2.5 rounded-full shadow-md transition-all duration-200 hover:scale-105 active:scale-100 cursor-pointer ${
-              isScrolled
-                ? "bg-[#2675D8] hover:bg-[#1C5EB0] text-white shadow-[#2675D8]/20"
-                : "bg-white hover:bg-slate-100 text-[#123B65] shadow-black/20"
+              onLightHero
+                ? "bg-[#0E2E36] hover:bg-[#16414B] text-white shadow-[#0E2E36]/25"
+                : onLight
+                  ? "bg-[#2675D8] hover:bg-[#1C5EB0] text-white shadow-[#2675D8]/20"
+                  : "bg-white hover:bg-slate-100 text-[#123B65] shadow-black/20"
             }`}
           >
-            <Calendar className={`w-3.5 h-3.5 ${isScrolled ? "text-white" : "text-[#2675D8]"}`} />
+            <Calendar className={`w-3.5 h-3.5 ${onLight ? "text-white" : "text-[#2675D8]"}`} />
             <span>Book Visit</span>
           </button>
         </div>
 
         {/* Mobile Controls */}
-        <div className="flex items-center gap-2 lg:hidden">
+        <div className="flex items-center gap-1.5 min-[380px]:gap-2 lg:hidden">
           <ThemeToggle
             className={
-              isScrolled
+              onLight
                 ? "bg-[var(--card-soft)] text-[var(--ink)] border-[var(--line)]"
                 : "bg-white/10 text-white border-white/20"
             }
@@ -286,8 +316,8 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
 
           <a
             href="tel:+919133933392"
-            className={`p-2 rounded-full text-xs font-medium border ${
-              isScrolled ? "bg-[var(--card-soft)] text-[var(--ink)] border-[var(--line)]" : "bg-white/10 text-white border-white/20"
+            className={`p-2 rounded-full text-xs font-medium border max-[379px]:hidden ${
+              onLight ? "bg-[var(--card-soft)] text-[var(--ink)] border-[var(--line)]" : "bg-white/10 text-white border-white/20"
             }`}
             aria-label="Call Now"
           >
@@ -297,7 +327,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
           <button
             onClick={onOpenBooking}
             className={`p-2 rounded-full text-xs font-medium ${
-              isScrolled ? "bg-[#2675D8] text-white" : "bg-[var(--card)] text-[var(--ink)]"
+              onLight ? "bg-[#2675D8] text-white" : "bg-[var(--card)] text-[var(--ink)]"
             }`}
             aria-label="Book visit"
           >
@@ -307,7 +337,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
           <button
             onClick={() => setMobileMenuOpen((open) => !open)}
             className={`p-2 focus:outline-none transition-colors ${
-              isScrolled ? "text-[var(--ink)] hover:text-[var(--ink)]" : "text-white hover:text-sky-300"
+              onLight ? "text-[var(--ink)] hover:text-[var(--ink)]" : "text-white hover:text-sky-300"
             }`}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
@@ -324,7 +354,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
         <div
           id="mobile-menu"
           className={`lg:hidden absolute top-full left-0 right-0 max-h-[calc(100vh-4rem)] overflow-y-auto p-6 shadow-2xl border-b flex flex-col gap-4 animate-in fade-in duration-200 ${
-            isScrolled
+            onLight
               ? "bg-[var(--card)] border-[var(--line)] text-[var(--ink)]"
               : "bg-[#071727]/98 backdrop-blur-2xl border-white/20 text-white"
           }`}
@@ -340,7 +370,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
               }}
               aria-current={isHomeActive ? "page" : undefined}
               className={`text-base font-semibold py-3 border-b transition-colors ${
-                isScrolled
+                onLight
                   ? "border-[var(--line)] hover:text-[#2675D8]"
                   : "border-white/10 hover:text-sky-300"
               }`}
@@ -350,14 +380,14 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
 
             {/* Services accordion */}
             <div
-              className={`border-b ${isScrolled ? "border-[var(--line)]" : "border-white/10"}`}
+              className={`border-b ${onLight ? "border-[var(--line)]" : "border-white/10"}`}
             >
               <div className="flex items-center justify-between">
                 <Link
                   href="/services"
                   onClick={() => setMobileMenuOpen(false)}
                   className={`flex-1 py-3 text-base font-semibold transition-colors ${
-                    isScrolled ? "hover:text-[#2675D8]" : "hover:text-sky-300"
+                    onLight ? "hover:text-[#2675D8]" : "hover:text-sky-300"
                   }`}
                 >
                   Services
@@ -369,7 +399,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
                   aria-controls="mobile-services-menu"
                   aria-label="Toggle treatments list"
                   className={`p-2 rounded-lg transition-colors ${
-                    isScrolled ? "text-[var(--ink-soft)] hover:bg-[var(--card-soft)]" : "text-white/80 hover:bg-white/10"
+                    onLight ? "text-[var(--ink-soft)] hover:bg-[var(--card-soft)]" : "text-white/80 hover:bg-white/10"
                   }`}
                 >
                   <ChevronDown
@@ -386,7 +416,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
                         href={`/services/${service.slug}`}
                         onClick={() => setMobileMenuOpen(false)}
                         className={`block rounded-lg px-3 py-2 text-sm transition-colors ${
-                          isScrolled
+                          onLight
                             ? "text-[var(--ink-soft)] hover:bg-[var(--card-soft)] hover:text-[#2675D8]"
                             : "text-slate-300 hover:bg-white/10 hover:text-white"
                         }`}
@@ -400,7 +430,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
                       href="/services"
                       onClick={() => setMobileMenuOpen(false)}
                       className={`block rounded-lg px-3 py-2 text-sm font-semibold transition-colors ${
-                        isScrolled ? "text-[#2675D8] hover:bg-[var(--card-soft)]" : "text-sky-300 hover:bg-white/10"
+                        onLight ? "text-[#2675D8] hover:bg-[var(--card-soft)]" : "text-sky-300 hover:bg-white/10"
                       }`}
                     >
                       All services
@@ -416,7 +446,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
                 className={`text-base font-semibold py-3 border-b transition-colors ${
-                  isScrolled
+                  onLight
                     ? "border-[var(--line)] hover:text-[#2675D8]"
                     : "border-white/10 hover:text-sky-300"
                 }`}
@@ -430,7 +460,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
             <a
               href="tel:+919133933392"
               className={`flex items-center justify-center gap-2 text-sm font-semibold py-3 rounded-xl border ${
-                isScrolled
+                onLight
                   ? "bg-[var(--card-soft)] text-[var(--ink)] border-[var(--line)]"
                   : "bg-white/10 text-white border-white/20"
               }`}
