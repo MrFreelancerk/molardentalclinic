@@ -76,7 +76,7 @@ export default function About() {
           <p className="text-xs font-semibold text-[var(--ink)] mb-2">
             Why
           </p>
-          <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-bold text-[var(--ink)] tracking-tight leading-tight mb-3">
+          <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-normal text-[var(--ink)] tracking-tight leading-tight mb-3">
             Patients Choose Our Molar Dental Hospital
           </h2>
           <p className="text-sm sm:text-base text-[var(--ink-soft)] font-normal">
@@ -104,7 +104,7 @@ export default function About() {
                 <span className="text-xs font-semibold text-[var(--ink)] block mb-3">
                   {card.category}
                 </span>
-                <h3 className="text-[19px] sm:text-[20px] font-bold text-[var(--ink)] tracking-tight leading-snug mb-3">
+                <h3 className="text-[19px] sm:text-[20px] font-normal text-[var(--ink)] tracking-tight leading-snug mb-3">
                   {card.title}
                 </h3>
                 <p className="text-xs text-[var(--ink-soft)] leading-relaxed font-normal">

@@ -64,7 +64,7 @@ export default function Faq() {
 
         {/* Section Header */}
         <div data-reveal className="text-center mb-10 sm:mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[var(--ink)] tracking-tight mb-3">
+          <h2 className="text-3xl sm:text-4xl font-normal text-[var(--ink)] tracking-tight mb-3">
             FAQs
           </h2>
           <p className="text-[var(--ink-soft)] text-sm sm:text-base font-normal">
@@ -112,7 +112,7 @@ export default function Faq() {
 
         {/* Need More Help */}
         <div data-reveal className="text-center mt-14 sm:mt-16">
-          <h3 className="text-2xl sm:text-3xl font-bold text-[var(--ink)] tracking-tight mb-2">
+          <h3 className="text-2xl sm:text-3xl font-normal text-[var(--ink)] tracking-tight mb-2">
             Need more help?
           </h3>
           <p className="text-[var(--ink-soft)] text-sm font-normal max-w-sm mx-auto">

@@ -1,15 +1,18 @@
 @import "tailwindcss";
+@import "../styles/colors.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-navy: #123B65;
+  --font-sans: 'Sora', system-ui, sans-serif;
+  --color-navy: #143A66;
   --color-navy-dark: #0A223B;
-  --color-blue: #2675D8;
-  --color-blue-dark: #1C5EB0;
-  --color-green: #39A852;
-  --color-green-light: #E8F7EC;
-  --color-ice: #F5F9FC;
+  --color-blue: #0072CE;
+  --color-blue-dark: #005FA8;
+  --color-green: #00B050;
+  --color-green-dark: #0B6B33;
+  --color-green-light: #E9F7EF;
+  --color-ice: #F4F8FB;
   --color-ice-dark: #E6EFF6;
 }
 
@@ -62,8 +65,8 @@
 }
 
 :root {
-  --font-heading: 'Sora', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-heading: 'Sora', system-ui, sans-serif;
+  --font-body: 'Sora', 'Inter', system-ui, sans-serif;
   color-scheme: light;
 }
 
@@ -75,12 +78,14 @@ body {
   background-color: var(--page);
   color: var(--ink);
   font-family: var(--font-body);
+  font-weight: 400;
   overflow-x: hidden;
   transition: background-color 200ms ease, color 200ms ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
+  font-weight: 400;
 }
 
 /* Custom scrollbar */

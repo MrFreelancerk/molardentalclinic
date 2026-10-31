@@ -9,7 +9,6 @@ import {
   ArrowUp,
   ArrowUpRight,
   ShieldCheck,
-  MessageCircle,
 } from "lucide-react";
 
 const CONTACT = {
@@ -50,6 +49,7 @@ const TREATMENTS = [
 
 const QUICK_LINKS = [
   { label: "Home", href: "/" },
+  { label: "About Us", href: "/about" },
   { label: "Why Molar", href: "/#why-us" },
   { label: "Our Dentists", href: "/#dentists" },
   { label: "Patient Reviews", href: "/#reviews" },
@@ -72,10 +72,17 @@ export default function Footer() {
           {/* Brand */}
           <div className="lg:col-span-4">
             <Link href="/" className="inline-block group" aria-label="Molar Dental Hospital — home">
+              {/* Light mode logo: Navy text */}
               <img
                 src="/molar-logo-dark.png"
                 alt="Molar Dental Hospital"
-                className="h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.03]"
+                className="h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.03] dark:hidden"
+              />
+              {/* Dark mode logo: Crisp white text */}
+              <img
+                src="/molar-logo.png"
+                alt="Molar Dental Hospital"
+                className="h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.03] hidden dark:block"
               />
             </Link>
 
@@ -199,16 +206,6 @@ export default function Footer() {
                 </span>
               </li>
             </ul>
-
-            <a
-              href={CONTACT.whatsapp}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#123B65] px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-[#0A223B]"
-            >
-              <MessageCircle className="h-3.5 w-3.5 text-[#4ADE80]" />
-              Chat on WhatsApp
-            </a>
           </div>
 
         </div>

@@ -1,14 +1,12 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import {
   Calendar,
   Phone,
   ArrowRight,
   Check,
-  Search,
-  X,
   ShieldCheck,
   Stethoscope,
   ScanLine,
@@ -63,49 +61,14 @@ const serviceHighlights: Record<
   },
 };
 
-const categoryFilters = [
-  "All Treatments",
-  "Endodontics & Restorative",
-  "Orthodontics & Aligners",
-  "Implants & Oral Surgery",
-  "Cosmetics & Diagnostics",
-];
-
 export default function ServicesHub() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [selectedService, setSelectedService] = useState("Comprehensive Oral Checkup");
-  const [activeCategory, setActiveCategory] = useState("All Treatments");
-  const [searchQuery, setSearchQuery] = useState("");
 
   const handleOpenBooking = (serviceName?: string) => {
     if (serviceName) setSelectedService(serviceName);
     setIsBookingOpen(true);
   };
-
-  const resetFilters = () => {
-    setActiveCategory("All Treatments");
-    setSearchQuery("");
-  };
-
-  const filteredServices = useMemo(() => {
-    return services.filter((service) => {
-      const highlight = serviceHighlights[service.slug];
-      const matchesCategory =
-        activeCategory === "All Treatments" ||
-        highlight?.categoryGroup === activeCategory;
-
-      const q = searchQuery.toLowerCase().trim();
-      if (!q) return matchesCategory;
-
-      const matchesSearch =
-        service.name.toLowerCase().includes(q) ||
-        service.category.toLowerCase().includes(q) ||
-        service.summary.toLowerCase().includes(q) ||
-        highlight?.features.some((f) => f.toLowerCase().includes(q));
-
-      return matchesCategory && matchesSearch;
-    });
-  }, [activeCategory, searchQuery]);
 
   return (
     <div className="min-h-screen bg-[var(--page)] text-[var(--ink)]">
@@ -120,7 +83,7 @@ export default function ServicesHub() {
                 Treatments &middot; Indresham, Patancheru
               </p>
 
-              <h1 className="mt-5 text-[32px] sm:text-[44px] lg:text-[52px] font-bold tracking-[-0.025em] leading-[1.06]">
+              <h1 className="mt-5 text-[32px] sm:text-[44px] lg:text-[52px] font-normal tracking-[-0.025em] leading-[1.06]">
                 Dental treatments,
                 <br className="hidden sm:block" />{" "}
                 <span className="text-white/55">all under one roof.</span>
@@ -152,106 +115,17 @@ export default function ServicesHub() {
           </div>
         </section>
 
-        {/* ================= FILTERS ================= */}
-        <section className="sticky top-16 z-20 bg-[var(--card)]/95 backdrop-blur-md border-b border-[var(--line)]">
-          <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14">
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 py-3.5">
-              {/* Scrolls sideways on narrow screens; the right fade signals more
-                  categories without needing a visible scrollbar */}
-              <div
-                className="flex items-center gap-1 overflow-x-auto no-scrollbar -mx-1 px-1"
-                style={{
-                  maskImage:
-                    "linear-gradient(to right, #000 0, #000 calc(100% - 24px), transparent 100%)",
-                  WebkitMaskImage:
-                    "linear-gradient(to right, #000 0, #000 calc(100% - 24px), transparent 100%)",
-                }}
-              >
-                {categoryFilters.map((cat) => {
-                  const isActive = activeCategory === cat;
-                  return (
-                    <button
-                      key={cat}
-                      onClick={() => setActiveCategory(cat)}
-                      aria-pressed={isActive}
-                      className={`shrink-0 px-3.5 py-2 rounded-none text-[12.5px] whitespace-nowrap transition-colors duration-200 cursor-pointer ${
-                        isActive
-                          ? "bg-[var(--ink)] text-[var(--card)] font-semibold"
-                          : "text-[var(--ink-soft)] hover:text-[var(--ink)] hover:bg-[var(--card-soft)] font-medium"
-                      }`}
-                    >
-                      {cat}
-                    </button>
-                  );
-                })}
-              </div>
-
-              <div className="relative w-full lg:w-64 shrink-0">
-                <Search className="w-4 h-4 text-[var(--ink-faint)] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search treatments"
-                  aria-label="Search treatments"
-                  className="w-full h-10 pl-9 pr-9 bg-[var(--page)] border border-[var(--line)] rounded-none text-[13px] text-[var(--ink)] placeholder:text-[var(--ink-faint)] focus:outline-none focus:border-[var(--accent)] focus:ring-2 focus:ring-[var(--accent)]/15 transition-colors"
-                />
-                {searchQuery && (
-                  <button
-                    onClick={() => setSearchQuery("")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--ink-faint)] hover:text-[var(--ink)] cursor-pointer"
-                    aria-label="Clear search"
-                  >
-                    <X className="w-3.5 h-3.5" />
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* ================= TREATMENTS ================= */}
         <section className="py-10 sm:py-14 lg:py-16">
           <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14">
-            <div className="flex items-baseline justify-between gap-4 mb-7">
+            <div className="mb-7">
               <p className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-[var(--ink-faint)]">
-                {filteredServices.length} treatment{filteredServices.length === 1 ? "" : "s"}
-                {activeCategory !== "All Treatments" && (
-                  <span className="text-[var(--ink-faint)]/75"> &middot; {activeCategory}</span>
-                )}
+                All Treatments ({services.length})
               </p>
-
-              {(activeCategory !== "All Treatments" || searchQuery) && (
-                <button
-                  onClick={resetFilters}
-                  className="text-[12.5px] font-medium text-[var(--accent)] hover:text-[var(--accent-strong)] hover:underline underline-offset-4 cursor-pointer"
-                >
-                  Clear filters
-                </button>
-              )}
             </div>
 
-            {filteredServices.length === 0 && (
-              <div className="py-16 px-6 text-center bg-[var(--card)] rounded-none border border-[var(--line)] max-w-md mx-auto">
-                <Stethoscope className="w-8 h-8 text-[var(--ink-faint)] mx-auto" strokeWidth={1.5} />
-                <h3 className="mt-4 text-base font-semibold text-[var(--ink)]">
-                  No treatments found
-                </h3>
-                <p className="mt-1.5 text-[13px] leading-relaxed text-[var(--ink-soft)]">
-                  Nothing matches &ldquo;{searchQuery}&rdquo;. Try a different term or
-                  browse all treatments.
-                </p>
-                <button
-                  onClick={resetFilters}
-                  className="mt-6 inline-flex items-center gap-2 bg-[var(--ink)] text-[var(--card)] text-[12.5px] font-semibold px-4 py-2 rounded-none hover:opacity-90 transition-opacity cursor-pointer"
-                >
-                  <span>View all treatments</span>
-                </button>
-              </div>
-            )}
-
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filteredServices.map((service) => {
+              {services.map((service) => {
                 const highlight = serviceHighlights[service.slug];
 
                 return (

@@ -46,7 +46,7 @@ export default function ServiceDetail({ service }: ServiceDetailProps) {
                 <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/55">
                   {service.category}
                 </p>
-                <h1 className="mt-4 text-[34px] font-semibold leading-[1.05] tracking-[-0.03em] sm:text-[48px]">
+                <h1 className="mt-4 text-[34px] font-normal leading-[1.05] tracking-[-0.03em] sm:text-[48px]">
                   {service.heroTitle}
                 </h1>
                 <p className="mt-4 max-w-xl text-[14px] leading-relaxed text-white/65 sm:text-[15px]">
@@ -111,7 +111,7 @@ export default function ServiceDetail({ service }: ServiceDetailProps) {
                 </div>
 
                 <div className="mt-10 border-t border-[var(--line)] pt-10">
-                  <h2 className="text-[24px] font-semibold leading-tight tracking-[-0.02em] text-[var(--ink)] sm:text-[28px]">
+                  <h2 className="text-[24px] font-normal leading-tight tracking-[-0.02em] text-[var(--ink)] sm:text-[28px]">
                     {service.whatIs.heading}
                   </h2>
                   <div className="mt-4 max-w-[68ch]">
@@ -128,7 +128,7 @@ export default function ServiceDetail({ service }: ServiceDetailProps) {
 
                 {service.blocks.map((block) => (
                   <div key={block.heading} className="mt-10 border-t border-[var(--line)] pt-10">
-                    <h2 className="text-[24px] font-semibold leading-tight tracking-[-0.02em] text-[var(--ink)] sm:text-[28px]">
+                    <h2 className="text-[24px] font-normal leading-tight tracking-[-0.02em] text-[var(--ink)] sm:text-[28px]">
                       {block.heading}
                     </h2>
                     {block.intro && (
@@ -181,7 +181,7 @@ export default function ServiceDetail({ service }: ServiceDetailProps) {
 
                 {service.whyChoose && (
                   <div className="mt-10 rounded-none border border-[var(--line)] bg-[var(--card)] p-6 sm:p-8">
-                    <h2 className="text-[22px] font-semibold leading-tight tracking-[-0.02em] text-[var(--ink)] sm:text-[26px]">
+                    <h2 className="text-[22px] font-normal leading-tight tracking-[-0.02em] text-[var(--ink)] sm:text-[26px]">
                       {service.whyChoose.heading}
                     </h2>
                     {service.whyChoose.intro && (

@@ -34,7 +34,7 @@ export default function Reviews() {
         
         {/* Section Header */}
         <div data-reveal className="text-center max-w-xl mx-auto mb-14 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[var(--ink)] tracking-tight mb-3">
+          <h2 className="text-3xl sm:text-4xl font-normal text-[var(--ink)] tracking-tight mb-3">
             Patient stories
           </h2>
           <p className="text-[var(--ink-soft)] text-sm sm:text-base font-normal">

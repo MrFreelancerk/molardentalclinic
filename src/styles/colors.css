@@ -1,0 +1,96 @@
+/**
+ * Molar Dental Design System - Color Theory Tokens
+ * Grounded in exact logo pixel sampling + WCAG AA contrast rules
+ */
+
+:root {
+  /* =========================================================================
+     1. BRAND COLORS (Derived from Logo)
+     ========================================================================= */
+  /**
+   * Navy: Used for headlines, body text, nav links, primary button, stat numbers, footer background
+   * Logo eyedropper sample: #123B65 | Brand token: #143A66
+   */
+  --color-navy: #143A66;
+  --color-navy-logo: #123B65;
+
+  /**
+   * Blue: Highlighted words in headline ("WHOLE FAMILY"), links, active menu item, focus rings
+   * Logo eyedropper sample: #0074CD | Brand token: #0072CE
+   */
+  --color-blue: #0072CE;
+  --color-blue-logo: #0074CD;
+
+  /**
+   * Green: Tick marks, "Open today" dot, WhatsApp button border, small success cues
+   * Note: Do NOT use as text or behind white text (fails contrast).
+   * Logo eyedropper sample: #00B04F | Brand token: #00B050
+   */
+  --color-green: #00B050;
+  --color-green-logo: #00B04F;
+
+  /* =========================================================================
+     2. SUPPORTING COLORS
+     ========================================================================= */
+  /** Slate: Stat labels, captions, secondary text */
+  --color-slate: #5E7690;
+
+  /** Dark Green: Contrast-safe text (e.g. "Open today" label, phone numbers) */
+  --color-dark-green: #0B6B33;
+
+  /** Gold: Star rating indicators only */
+  --color-gold: #F5A623;
+
+  /* =========================================================================
+     3. BACKGROUNDS & GRADIENTS
+     ========================================================================= */
+  /** Page Base: Main page canvas & section backdrops */
+  --color-page-base: #F4F8FB;
+
+  /** Sky: Hero gradient aura, left side behind headline */
+  --color-sky: #BFE3F5;
+
+  /** Mint: Hero gradient aura, blends with sky into teal glow */
+  --color-mint: #CDEFE3;
+
+  /** Faint Blush: Hero gradient, right edge only, subtle warmth */
+  --color-faint-blush: #F6E3E6;
+
+  /** Soft Blue Tint: Active menu item background, tags, hover states */
+  --color-blue-tint: #E8F2FB;
+
+  /** Soft Green Tint: "Open today" pill background, status chips */
+  --color-green-tint: #E9F7EF;
+
+  /** Border: Card borders, dividers, subtle outlines */
+  --color-border: #E3EAF2;
+
+  /* =========================================================================
+     4. SEMANTIC COMPONENT ROLES
+     ========================================================================= */
+  --text-main: var(--color-navy);
+  --text-muted: var(--color-slate);
+  --text-accent: var(--color-blue);
+  --text-success: var(--color-dark-green);
+
+  --btn-primary-bg: var(--color-navy);
+  --btn-primary-fg: #FFFFFF;
+
+  --btn-secondary-bg: #FFFFFF;
+  --btn-secondary-fg: var(--color-navy);
+  --btn-secondary-border: var(--color-navy);
+
+  --whatsapp-border: var(--color-green);
+  --whatsapp-fg: var(--color-dark-green);
+}
+
+/* Dark Mode Overrides */
+.dark {
+  --color-page-base: #070F1A;
+  --color-border: #182C40;
+  --text-main: #EDF3F8;
+  --text-muted: #8FA6BC;
+  --color-blue-tint: #0E253C;
+  --color-green-tint: #0B291A;
+}
+

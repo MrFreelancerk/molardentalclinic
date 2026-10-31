@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarCheck, ScanFace, HeartHandshake, Sparkles, ArrowRight } from "lucide-react";
+import { CalendarCheck, ScanFace, HeartHandshake, Smile, ArrowRight } from "lucide-react";
 
 interface PatientJourneyProps {
   onOpenBooking: () => void;
@@ -29,7 +29,7 @@ const STEPS = [
     title: "Leave with confidence",
     description:
       "A restored smile, clear aftercare and follow-up support if you ever need us again.",
-    icon: Sparkles,
+    icon: Smile,
   },
 ];
 
@@ -42,7 +42,7 @@ export default function PatientJourney({ onOpenBooking }: PatientJourneyProps) {
       <div className="container-page">
         <div className="max-w-xl">
           <p className="eyebrow">What to expect</p>
-          <h2 className="mt-3 text-[30px] font-semibold leading-[1.1] tracking-[-0.03em] text-[var(--ink)] sm:text-[42px]">
+          <h2 className="mt-3 text-[30px] font-normal leading-[1.1] tracking-[-0.03em] text-[var(--ink)] sm:text-[42px]">
             Four simple steps.
           </h2>
           <p className="mt-4 text-[13.5px] leading-relaxed text-[var(--ink-soft)]">

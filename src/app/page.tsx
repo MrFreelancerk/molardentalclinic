@@ -48,8 +48,11 @@ export default function Home() {
         {/* 3. Why Choose Molar Dental */}
         <About />
 
-        {/* 4. Meet The Dentists */}
-        <Dentists onOpenBooking={(doctor) => handleOpenBooking(doctor || "Doctor Consultation")} />
+        {/* 4. Meet The Dentists (Detailed profile on Home Page) */}
+        <Dentists
+          showDetails={true}
+          onOpenBooking={(doctor) => handleOpenBooking(doctor || "Doctor Consultation")}
+        />
 
         {/* 5. Patient Reviews */}
         <Reviews />
