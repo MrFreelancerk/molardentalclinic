@@ -13,6 +13,7 @@ export default function About() {
       srcSet:
         "/why-us/experienced-dentists-640.webp 640w, /why-us/experienced-dentists-1200.webp 1200w",
       alt: "Experienced dentists providing exceptional dental care",
+      objectPosition: "object-[center_28%]",
     },
     {
       category: "Technology",
@@ -23,6 +24,7 @@ export default function About() {
       srcSet:
         "/why-us/advanced-technology-640.webp 640w, /why-us/advanced-technology-1200.webp 1200w",
       alt: "Advanced dental technology and modern equipment",
+      objectPosition: "object-[center_20%]",
     },
     {
       category: "Personalized",
@@ -33,6 +35,7 @@ export default function About() {
       srcSet:
         "/why-us/personalized-care-640.webp 640w, /why-us/personalized-care-1200.webp 1200w",
       alt: "Personalized care and customized treatment plans",
+      objectPosition: "object-[center_22%]",
     },
     {
       category: "Comfort",
@@ -43,6 +46,7 @@ export default function About() {
       srcSet:
         "/why-us/comfortable-experience-640.webp 640w, /why-us/comfortable-experience-1200.webp 1200w",
       alt: "Comfortable and welcoming clinic experience",
+      objectPosition: "object-center",
     },
     {
       category: "Affordable",
@@ -53,6 +57,7 @@ export default function About() {
       srcSet:
         "/why-us/affordable-treatments-640.webp 640w, /why-us/affordable-treatments-1200.webp 1200w",
       alt: "Affordable dental treatments with transparent pricing",
+      objectPosition: "object-[center_20%]",
     },
     {
       category: "Families",
@@ -63,15 +68,16 @@ export default function About() {
       srcSet:
         "/why-us/trusted-by-families-640.webp 640w, /why-us/trusted-by-families-1200.webp 1200w",
       alt: "Families trusting Molar Dental Hospital",
+      objectPosition: "object-[center_20%]",
     },
   ];
 
   return (
-    <section id="about" className="py-20 sm:py-24 bg-[var(--page)] border-t border-[var(--line)] scroll-mt-10">
+    <section id="about" className="py-20 sm:py-24 bg-[var(--page)] border-t border-[var(--line)] scroll-mt-24">
       <div id="why-us" className="sr-only scroll-mt-24" />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Exact Header Alignment */}
+        {/* Section Header */}
         <div data-reveal className="text-center max-w-2xl mx-auto mb-12 sm:mb-14">
           <p className="text-xs font-semibold text-[var(--ink)] mb-2">
             Why
@@ -84,36 +90,23 @@ export default function About() {
           </p>
         </div>
 
-        {/* 6 Cards Grid (Exact Borders, Radius, Colors & Images) */}
+        {/* 6 Cards Grid - Full Natural Images on Top */}
         <div data-reveal-stagger className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {cards.map((card, idx) => (
             <Link
               key={idx}
               href={card.href}
               data-reveal
-              className="group relative flex flex-col bg-[var(--card)] rounded-none border border-[var(--line)] overflow-hidden transition-colors duration-200 hover:border-[#123B65] focus-visible:border-[#123B65]"
+              className="group relative flex flex-col bg-[var(--card)] rounded-none border border-[var(--line)] overflow-hidden transition-all duration-300 hover:border-[#123B65] hover:shadow-lg focus-visible:border-[#123B65]"
             >
               {/* Sharp accent rule that draws across the top edge on hover */}
               <span
                 aria-hidden="true"
-                className="absolute inset-x-0 top-0 z-10 h-[2px] origin-left scale-x-0 bg-[#2675D8] transition-transform duration-300 ease-out group-hover:scale-x-100 group-focus-visible:scale-x-100"
+                className="absolute inset-x-0 top-0 z-20 h-[2px] origin-left scale-x-0 bg-[#2675D8] transition-transform duration-300 ease-out group-hover:scale-x-100 group-focus-visible:scale-x-100"
               />
 
-              {/* Card Top Text Area */}
-              <div className="p-6 sm:p-7">
-                <span className="text-xs font-semibold text-[var(--ink)] block mb-3">
-                  {card.category}
-                </span>
-                <h3 className="text-[19px] sm:text-[20px] font-normal text-[var(--ink)] tracking-tight leading-snug mb-3">
-                  {card.title}
-                </h3>
-                <p className="text-xs text-[var(--ink-soft)] leading-relaxed font-normal">
-                  {card.description}
-                </p>
-              </div>
-
-              {/* Card Bottom Photo */}
-              <div className="mt-auto h-36 sm:h-40 w-full overflow-hidden bg-[var(--card-soft)]">
+              {/* Card Photo on Top: Generous 3:2 Aspect Ratio showing the full image without stripping */}
+              <div className="relative aspect-[3/2] w-full overflow-hidden bg-[var(--card-soft)] border-b border-[var(--line)]">
                 <img
                   src={card.image}
                   srcSet={card.srcSet}
@@ -121,8 +114,24 @@ export default function About() {
                   alt={card.alt}
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.04]"
+                  className={`w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.04] ${card.objectPosition}`}
                 />
+                {/* Clean architectural category badge overlaid on photo */}
+                <div className="absolute top-3.5 left-3.5 z-10">
+                  <span className="inline-block px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-[var(--ink)] bg-[var(--card)]/90 backdrop-blur-md rounded-none border border-[var(--line)]">
+                    {card.category}
+                  </span>
+                </div>
+              </div>
+
+              {/* Card Content Area */}
+              <div className="p-6 sm:p-7 flex flex-col flex-1">
+                <h3 className="text-[19px] sm:text-[20px] font-normal text-[var(--ink)] tracking-tight leading-snug mb-2.5">
+                  {card.title}
+                </h3>
+                <p className="text-xs sm:text-[13px] text-[var(--ink-soft)] leading-relaxed font-normal">
+                  {card.description}
+                </p>
               </div>
             </Link>
           ))}

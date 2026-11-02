@@ -1,7 +1,23 @@
 "use client";
 
 import { useState, type CSSProperties } from "react";
-import { Calendar, Phone, ChevronsUpDown } from "lucide-react";
+import { Phone, ChevronsUpDown } from "lucide-react";
+
+function ToothIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M7.2 2.5C5 2.5 3 4.2 3 7c0 3.2 1.4 6.3 2 9.5.4 2.2 1.8 4 4 4 1.8 0 2.5-1.5 3-3 .5 1.5 1.2 3 3 3 2.2 0 3.6-1.8 4-4 .6-3.2 2-6.3 2-9.5 0-2.8-2-4.5-4.2-4.5-2.2 0-3.3 1.2-4.8 1.2-1.5 0-2.6-1.2-4.8-1.2Z" />
+    </svg>
+  );
+}
 
 interface HeroProps {
   onOpenBooking: (service?: string) => void;
@@ -111,7 +127,7 @@ export default function Hero({ onOpenBooking }: HeroProps) {
             Dental Hospital in Patancheru
           </p>
 
-          <h1 className="mt-4 text-[clamp(1.75rem,5.2vw,4.5rem)] leading-[0.94] font-normal tracking-[-0.035em] text-white uppercase drop-shadow-[0_4px_24px_rgba(0,0,0,0.28)] sm:mt-5 sm:text-[clamp(2.3rem,4.8vw,4.5rem)] sm:leading-[0.92]">
+          <h1 className="mt-4 max-[360px]:text-[2rem] text-[clamp(2.35rem,8.8vw,3.4rem)] leading-[0.94] font-normal tracking-[-0.035em] text-white uppercase drop-shadow-[0_4px_24px_rgba(0,0,0,0.28)] sm:mt-5 sm:text-[clamp(2.5rem,4.8vw,4.5rem)] sm:leading-[0.92]">
             <span style={{ animationDelay: `${D.line1}ms` }} className="hero-line-in block">
               Painless dental
             </span>
@@ -141,22 +157,21 @@ export default function Hero({ onOpenBooking }: HeroProps) {
             style={{ animationDelay: `${D.actions}ms` }}
             className="hero-rise mt-7 flex flex-wrap items-center gap-3.5 sm:mt-8 xl:mt-9"
           >
-            {/* Primary CTA */}
+            {/* Primary CTA: Crisp White Frosted Glass for maximum visibility on teal */}
             <button
               onClick={() => onOpenBooking()}
-              className="cta cta--primary inline-flex cursor-pointer items-center gap-2.5 rounded-full bg-[#143A66] px-7 py-3.5 text-[11.5px] font-bold tracking-[0.1em] text-white uppercase shadow-[0_18px_38px_-12px_rgba(0,0,0,0.45)] hover:bg-[#0E2A4D] sm:text-[12.5px]"
+              className="inline-flex cursor-pointer items-center justify-center h-[46px] sm:h-[56px] px-[16px] sm:px-[20px] gap-[8px] text-[15px] sm:text-[18px] font-bold rounded-full border border-white/70 bg-white/20 hover:bg-white/30 backdrop-blur-xl text-white shadow-[inset_0_1.5px_2px_rgba(255,255,255,0.85),0_8px_24px_rgba(0,0,0,0.12)] transition-all duration-200"
             >
-              <span aria-hidden="true" className="cta__sheen" />
-              <Calendar className="cta__icon h-4 w-4" strokeWidth={2.2} aria-hidden="true" />
-              <span>Book an Appointment</span>
+              <ToothIcon className="w-5 h-5 sm:w-6 sm:h-6 shrink-0 text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)]" />
+              <span className="drop-shadow-[0_1px_2px_rgba(0,0,0,0.2)]">Book an Appointment</span>
             </button>
 
             {/* Secondary CTA */}
             <a
               href="tel:+919133933392"
-              className="cta cta--secondary inline-flex items-center gap-2.5 rounded-full border border-[#143A66]/20 bg-white px-7 py-3.5 text-[11.5px] font-bold tracking-[0.1em] text-[#143A66] uppercase shadow-[0_16px_34px_-14px_rgba(0,0,0,0.2)] hover:bg-slate-100 sm:text-[12.5px]"
+              className="inline-flex items-center justify-center h-[46px] sm:h-[56px] px-[16px] sm:px-[20px] gap-[8px] text-[15px] sm:text-[18px] font-bold rounded-full border border-white/60 dark:border-white/35 bg-white/40 hover:bg-white/60 dark:bg-white/10 dark:hover:bg-white/20 backdrop-blur-xl text-[#143A66] dark:text-white shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.85),0_8px_24px_rgba(0,0,0,0.06)] transition-all duration-200"
             >
-              <Phone className="cta__icon h-4 w-4 text-[#00B050]" strokeWidth={2.2} aria-hidden="true" />
+              <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-[#00B050] shrink-0" strokeWidth={2.2} aria-hidden="true" />
               <span>Call Now</span>
             </a>
           </div>
@@ -211,7 +226,7 @@ export default function Hero({ onOpenBooking }: HeroProps) {
         </dl>
 
         {/* Bottom-right scroll prompt pill */}
-        <div className="order-6 hidden xl:col-span-3 xl:col-start-10 xl:row-start-3 xl:flex xl:items-end xl:justify-end">
+        {/* <div className="order-6 hidden xl:col-span-3 xl:col-start-10 xl:row-start-3 xl:flex xl:items-end xl:justify-end">
           <a
             href="#about"
             aria-label="Scroll to explore"
@@ -219,7 +234,7 @@ export default function Hero({ onOpenBooking }: HeroProps) {
           >
             <ChevronsUpDown className="h-4 w-4" strokeWidth={2} />
           </a>
-        </div>
+        </div> */}
       </div>
     </section>
   );

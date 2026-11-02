@@ -326,14 +326,15 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
 
           <button
             onClick={onOpenBooking}
-            className={`inline-flex items-center justify-center text-xs sm:text-[13px] font-bold px-5.5 py-2.5 rounded-full shadow-md transition-all duration-200 hover:scale-105 active:scale-100 cursor-pointer ${
+            className={`inline-flex items-center justify-center h-[36px] px-[12px] gap-[6px] text-[14px] font-bold rounded-full border backdrop-blur-xl transition-all duration-200 cursor-pointer ${
               onLightHero
-                ? "bg-[#143A66] hover:bg-[#0E2A4D] text-white shadow-[#143A66]/25"
-                : onLight
-                  ? "bg-[#0072CE] hover:bg-[#005bb5] text-white shadow-[#0072CE]/20"
-                  : "bg-[#0072CE] hover:bg-[#005FA8] text-white shadow-[#0072CE]/30"
+                ? "bg-[#e5e5e5]/20 hover:bg-[#e5e5e5]/35 text-[#143A66] dark:text-white border-white/60 shadow-[inset_0_1px_1px_rgba(255,255,255,0.8),0_4px_12px_rgba(0,0,0,0.05)]"
+                : isScrolled && !isDark
+                  ? "bg-[#0072CE]/12 hover:bg-[#0072CE]/20 text-[#0072CE] border-[#0072CE]/35 shadow-[inset_0_1.5px_1px_rgba(255,255,255,0.95),0_2px_10px_rgba(0,114,206,0.12)]"
+                  : "bg-white/15 hover:bg-white/25 text-white border-white/35 shadow-[inset_0_1px_1.5px_rgba(255,255,255,0.35),0_4px_16px_rgba(0,0,0,0.3)]"
             }`}
           >
+            <ToothIcon className={`w-4 h-4 shrink-0 ${isDark ? "text-white" : "text-[#0072CE]"}`} />
             <span>Book Visit</span>
           </button>
         </div>
@@ -365,7 +366,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
             }`}
             aria-label="Book visit"
           >
-            <Calendar className="w-3.5 h-3.5" />
+            <ToothIcon className="w-4 h-4" />
           </button>
 
           <button

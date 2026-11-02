@@ -153,12 +153,12 @@ export default function Dentists({ onOpenBooking, showDetails }: DentistsProps) 
                       <h3 className="mt-1.5 text-lg xl:text-xl font-normal text-[var(--ink)] tracking-tight leading-snug">
                         {doctor.name}
                       </h3>
-                      <p className="mt-1 text-[13px] font-semibold text-[#0072CE]">{doctor.role}</p>
+                      <p className="mt-1 text-[13px] font-semibold text-[#0072CE] dark:text-[#38BDF8]">{doctor.role}</p>
 
                       {/* Home Page Exclusive Details: Experience, Bio Description, Specialties */}
                       {shouldShowDetails && (
                         <div className="mt-3.5 border-t border-[var(--line)] pt-3.5 space-y-3">
-                          <span className="inline-block text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0072CE] bg-[#0072CE]/10 px-2.5 py-1 rounded-none border border-[#0072CE]/20">
+                          <span className="inline-block text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0072CE] bg-[#0072CE]/10 border-[#0072CE]/20 dark:text-[#38BDF8] dark:bg-[#38BDF8]/10 dark:border-[#38BDF8]/30 px-2.5 py-1 rounded-none border">
                             {doctor.experience}
                           </span>
 
@@ -187,7 +187,7 @@ export default function Dentists({ onOpenBooking, showDetails }: DentistsProps) 
                     </div>
 
                     <div className="pt-4 mt-auto border-t border-[var(--line)]/60 flex items-center justify-between">
-                      <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#0072CE] group-hover:text-[#005FA8] transition-colors">
+                      <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.16em] text-[#0072CE] group-hover:text-[#005FA8] dark:text-[#38BDF8] dark:group-hover:text-[#7DD3FC] transition-colors">
                         Book consultation
                         <ArrowRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
                       </span>
@@ -258,7 +258,7 @@ export default function Dentists({ onOpenBooking, showDetails }: DentistsProps) 
                   className="w-14 h-14 rounded-none object-cover object-top border border-[var(--line)]"
                 />
                 <div>
-                  <span className="text-[11px] font-semibold text-[#0072CE]">
+                  <span className="text-[11px] font-semibold text-[#0072CE] dark:text-[#38BDF8]">
                     {selectedDoctor.qualification} &bull; {selectedDoctor.experience}
                   </span>
                   <h3 className="text-lg font-normal text-[var(--ink)] mt-0.5">
