@@ -111,25 +111,25 @@ export default function Hero({ onOpenBooking }: HeroProps) {
             Dental Hospital in Patancheru
           </p>
 
-          <h1 className="mt-4 text-[clamp(2.3rem,4.8vw,4.5rem)] leading-[0.92] font-normal tracking-[-0.035em] text-white uppercase drop-shadow-[0_4px_24px_rgba(0,0,0,0.28)] sm:mt-5">
+          <h1 className="mt-4 text-[clamp(1.75rem,5.2vw,4.5rem)] leading-[0.94] font-normal tracking-[-0.035em] text-white uppercase drop-shadow-[0_4px_24px_rgba(0,0,0,0.28)] sm:mt-5 sm:text-[clamp(2.3rem,4.8vw,4.5rem)] sm:leading-[0.92]">
             <span style={{ animationDelay: `${D.line1}ms` }} className="hero-line-in block">
               Painless dental
             </span>
             <span
               style={{ animationDelay: `${D.line2}ms` }}
-              className="hero-line-in mt-2 flex items-center gap-3 sm:gap-4"
+              className="hero-line-in mt-1.5 sm:mt-2.5 flex items-center gap-2.5 sm:gap-4"
             >
-              {/* Refined rounded pill badge */}
-              <span className="inline-flex h-[0.72em] w-[1.3em] shrink-0 items-center overflow-hidden rounded-[6px] shadow-[0_8px_22px_rgba(0,0,0,0.3)] ring-1.5 ring-white/50 sm:rounded-[8px]">
+              {/* Clean badge with real family smile care */}
+              <span className="relative inline-flex h-[0.74em] w-[1.38em] shrink-0 items-center overflow-hidden rounded-[8px] sm:rounded-[10px] shadow-[0_8px_24px_rgba(0,0,0,0.25)] ring-1.5 ring-white/70 backdrop-blur-md">
                 <img
-                  src="/bento-smile.jpg"
-                  alt="Healthy smiling patient"
-                  width={112}
-                  height={64}
+                  src="/why-us/trusted-by-families-640.webp"
+                  alt="Family smile care at Molar Dental"
+                  width={120}
+                  height={68}
                   className="h-full w-full object-cover"
                 />
               </span>
-              <span>care for your</span>
+              <span className="whitespace-nowrap">care for your</span>
             </span>
             <span style={{ animationDelay: `${D.line3}ms` }} className="hero-line-in block">
               whole family
@@ -144,18 +144,19 @@ export default function Hero({ onOpenBooking }: HeroProps) {
             {/* Primary CTA */}
             <button
               onClick={() => onOpenBooking()}
-              className="inline-flex cursor-pointer items-center gap-2.5 rounded-full bg-[#143A66] hover:bg-[#0E2A4D] px-7 py-3.5 text-[11.5px] font-bold tracking-[0.1em] text-white uppercase shadow-[0_18px_38px_-12px_rgba(0,0,0,0.45)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 sm:text-[12.5px]"
+              className="cta cta--primary inline-flex cursor-pointer items-center gap-2.5 rounded-full bg-[#143A66] px-7 py-3.5 text-[11.5px] font-bold tracking-[0.1em] text-white uppercase shadow-[0_18px_38px_-12px_rgba(0,0,0,0.45)] hover:bg-[#0E2A4D] sm:text-[12.5px]"
             >
-              <Calendar className="h-4 w-4" strokeWidth={2.2} aria-hidden="true" />
+              <span aria-hidden="true" className="cta__sheen" />
+              <Calendar className="cta__icon h-4 w-4" strokeWidth={2.2} aria-hidden="true" />
               <span>Book an Appointment</span>
             </button>
 
             {/* Secondary CTA */}
             <a
               href="tel:+919133933392"
-              className="inline-flex items-center gap-2.5 rounded-full bg-white hover:bg-slate-100 text-[#143A66] border border-[#143A66]/20 px-7 py-3.5 text-[11.5px] font-bold tracking-[0.1em] uppercase shadow-[0_16px_34px_-14px_rgba(0,0,0,0.2)] transition-all duration-300 hover:-translate-y-0.5 active:translate-y-0 sm:text-[12.5px]"
+              className="cta cta--secondary inline-flex items-center gap-2.5 rounded-full border border-[#143A66]/20 bg-white px-7 py-3.5 text-[11.5px] font-bold tracking-[0.1em] text-[#143A66] uppercase shadow-[0_16px_34px_-14px_rgba(0,0,0,0.2)] hover:bg-slate-100 sm:text-[12.5px]"
             >
-              <Phone className="h-4 w-4 text-[#00B050]" strokeWidth={2.2} aria-hidden="true" />
+              <Phone className="cta__icon h-4 w-4 text-[#00B050]" strokeWidth={2.2} aria-hidden="true" />
               <span>Call Now</span>
             </a>
           </div>

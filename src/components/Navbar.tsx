@@ -15,7 +15,6 @@ import {
   Home,
   Users,
   PhoneCall,
-  Stethoscope,
 } from "lucide-react";
 
 function ToothIcon({ className = "w-4 h-4" }: { className?: string }) {
@@ -139,6 +138,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
 
   const isServicesActive = pathname.startsWith("/services");
   const isContactActive = pathname === "/contact";
+  const isAboutActive = pathname === "/about";
   const isHomeActive = pathname === "/";
 
   const navLinkClass = (active: boolean) =>
@@ -156,7 +156,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 w-full transition-colors duration-200 py-1.5 sm:py-2 px-6 sm:px-10 lg:px-14 flex items-center ${
+      className={`fixed top-0 left-0 right-0 z-50 w-full transition-colors duration-200 py-1.5 sm:py-2 px-3.5 sm:px-8 lg:px-14 flex items-center ${
         isScrolled
           ? "bg-[var(--card)]/95 backdrop-blur-md border-b border-[var(--line)] shadow-sm text-[var(--ink)]"
           : onLightHero
@@ -171,7 +171,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
           <img
             src={isDark ? "/molar-logo.png" : onLight ? "/molar-logo-dark.png" : "/molar-logo.png"}
             alt="Molar Dental Hospital"
-            className="h-7 min-[380px]:h-8 sm:h-9 md:h-10 w-auto object-contain transition-transform group-hover:scale-105"
+            className="h-6.5 min-[380px]:h-7 sm:h-8 md:h-9 lg:h-10 w-auto object-contain transition-transform group-hover:scale-105"
           />
         </Link>
 
@@ -326,7 +326,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
 
           <button
             onClick={onOpenBooking}
-            className={`inline-flex items-center gap-2 text-xs sm:text-[13px] font-bold px-5.5 py-2.5 rounded-full shadow-md transition-all duration-200 hover:scale-105 active:scale-100 cursor-pointer ${
+            className={`inline-flex items-center justify-center text-xs sm:text-[13px] font-bold px-5.5 py-2.5 rounded-full shadow-md transition-all duration-200 hover:scale-105 active:scale-100 cursor-pointer ${
               onLightHero
                 ? "bg-[#143A66] hover:bg-[#0E2A4D] text-white shadow-[#143A66]/25"
                 : onLight
@@ -334,51 +334,50 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
                   : "bg-[#0072CE] hover:bg-[#005FA8] text-white shadow-[#0072CE]/30"
             }`}
           >
-            <Stethoscope className="w-3.5 h-3.5 text-white" />
             <span>Book Visit</span>
           </button>
         </div>
 
         {/* Mobile Controls */}
-        <div className="flex items-center gap-1.5 min-[380px]:gap-2 lg:hidden">
+        <div className="flex items-center gap-1 min-[380px]:gap-1.5 lg:hidden shrink-0">
           <ThemeToggle
-            className={
+            className={`!w-8 !h-8 ${
               onLight
                 ? "bg-[var(--card-soft)] text-[var(--ink)] border-[var(--line)]"
                 : "bg-white/10 text-white border-white/20"
-            }
+            }`}
           />
 
           <a
             href="tel:+919133933392"
-            className={`p-2 rounded-full text-xs font-medium border max-[379px]:hidden ${
+            className={`w-8 h-8 flex items-center justify-center rounded-full text-xs font-medium border max-[360px]:hidden ${
               onLight ? "bg-[var(--card-soft)] text-[var(--ink)] border-[var(--line)]" : "bg-white/10 text-white border-white/20"
             }`}
             aria-label="Call Now"
           >
-            <Phone className="w-4 h-4 text-[#39A852]" />
+            <Phone className="w-3.5 h-3.5 text-[#39A852]" />
           </a>
 
           <button
             onClick={onOpenBooking}
-            className={`p-2 rounded-full text-xs font-medium ${
-              onLight ? "bg-[#2675D8] text-white" : "bg-[var(--card)] text-[var(--ink)]"
+            className={`w-8 h-8 flex items-center justify-center rounded-full text-xs font-medium cursor-pointer ${
+              onLight ? "bg-[#0072CE] text-white" : "bg-[var(--card)] text-[var(--ink)]"
             }`}
             aria-label="Book visit"
           >
-            <Stethoscope className="w-4 h-4" />
+            <Calendar className="w-3.5 h-3.5" />
           </button>
 
           <button
             onClick={() => setMobileMenuOpen((open) => !open)}
-            className={`p-2 focus:outline-none transition-colors ${
+            className={`p-1.5 focus:outline-none transition-colors cursor-pointer ${
               onLight ? "text-[var(--ink)] hover:text-[var(--ink)]" : "text-white hover:text-sky-300"
             }`}
             aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-menu"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
 
@@ -446,38 +445,38 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }
               }}
-              className={`flex items-center gap-3 px-3.5 py-3 rounded-xl text-[15px] font-semibold transition-all ${
+              className={`flex items-center gap-3 px-3.5 py-3 rounded-none text-[15px] font-semibold transition-all ${
                 isHomeActive
                   ? "bg-[#0072CE]/10 text-[#0072CE]"
                   : "text-[var(--ink)] hover:bg-[var(--card-soft)] hover:text-[#0072CE]"
               }`}
             >
               <div
-                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
-                  isHomeActive ? "bg-[#0072CE] text-white" : "bg-[var(--card-soft)] text-[var(--ink-soft)]"
+                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-none transition-colors ${
+                  isHomeActive ? "bg-transparent text-[#0072CE]" : "bg-[var(--card-soft)] text-[var(--ink-soft)]"
                 }`}
               >
-                <Home className="w-4 h-4" />
+                <Home className="w-4.5 h-4.5" />
               </div>
               <span>Home</span>
             </Link>
 
             {/* Services Accordion with Tooth Icon */}
-            <div className="rounded-xl overflow-hidden transition-colors">
+            <div className="rounded-none overflow-hidden transition-colors">
               <div className="flex items-center justify-between">
                 <Link
                   href="/services"
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center gap-3 flex-1 px-3.5 py-3 rounded-l-xl text-[15px] font-semibold transition-all ${
-                    isServicesActive ? "text-[#0072CE]" : "text-[var(--ink)] hover:text-[#0072CE]"
+                  className={`flex items-center gap-3 flex-1 px-3.5 py-3 rounded-none text-[15px] font-semibold transition-all ${
+                    isServicesActive ? "bg-[#0072CE]/10 text-[#0072CE]" : "text-[var(--ink)] hover:text-[#0072CE]"
                   }`}
                 >
                   <div
-                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
-                      isServicesActive ? "bg-[#0072CE] text-white" : "bg-[var(--card-soft)] text-[#0072CE]"
+                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-none transition-colors ${
+                      isServicesActive ? "bg-transparent text-[#0072CE]" : "bg-[var(--card-soft)] text-[#0072CE]"
                     }`}
                   >
-                    <ToothIcon className="w-4 h-4" />
+                    <ToothIcon className="w-4.5 h-4.5" />
                   </div>
                   <span>Services</span>
                 </Link>
@@ -488,7 +487,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
                   aria-expanded={mobileServicesOpen}
                   aria-controls="mobile-services-menu"
                   aria-label="Toggle treatments list"
-                  className="p-3 mr-1 text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors rounded-lg hover:bg-[var(--card-soft)] cursor-pointer"
+                  className="p-3 mr-1 text-[var(--ink-soft)] hover:text-[var(--ink)] transition-colors rounded-none hover:bg-[var(--card-soft)] cursor-pointer"
                 >
                   <ChevronDown
                     className={`w-4 h-4 transition-transform duration-300 ${mobileServicesOpen ? "rotate-180 text-[#0072CE]" : ""}`}
@@ -509,7 +508,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
                       key={service.slug}
                       href={`/services/${service.slug}`}
                       onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center justify-between rounded-xl px-3 py-2 text-[14px] font-medium text-[var(--ink)] hover:text-[#0072CE] hover:bg-[#E8F2FB] dark:hover:bg-[#0E253C] transition-colors group"
+                      className="flex items-center justify-between rounded-none px-3 py-2 text-[14px] font-medium text-[var(--ink)] hover:text-[#0072CE] hover:bg-[#E8F2FB] dark:hover:bg-[#0E253C] transition-colors group"
                     >
                       <div className="flex items-center gap-2.5 min-w-0">
                         <div
@@ -525,7 +524,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
                   <Link
                     href="/services"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-between rounded-xl px-3 py-2 text-[13px] font-bold text-[#0072CE] hover:bg-[#E8F2FB] dark:hover:bg-[#0E253C] transition-colors group mt-0.5"
+                    className="flex items-center justify-between rounded-none px-3 py-2 text-[13px] font-bold text-[#0072CE] hover:bg-[#E8F2FB] dark:hover:bg-[#0E253C] transition-colors group mt-0.5"
                   >
                     <span>Explore All Services</span>
                     <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -538,10 +537,18 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
             <Link
               href="/about"
               onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-3 px-3.5 py-3 rounded-xl text-[15px] font-semibold text-[var(--ink)] hover:bg-[var(--card-soft)] hover:text-[#0072CE] transition-all"
+              className={`flex items-center gap-3 px-3.5 py-3 rounded-none text-[15px] font-semibold transition-all ${
+                isAboutActive
+                  ? "bg-[#0072CE]/10 text-[#0072CE]"
+                  : "text-[var(--ink)] hover:bg-[var(--card-soft)] hover:text-[#0072CE]"
+              }`}
             >
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[var(--card-soft)] text-[var(--ink-soft)]">
-                <Users className="w-4 h-4" />
+              <div
+                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-none transition-colors ${
+                  isAboutActive ? "bg-transparent text-[#0072CE]" : "bg-[var(--card-soft)] text-[var(--ink-soft)]"
+                }`}
+              >
+                <Users className="w-4.5 h-4.5" />
               </div>
               <span>About</span>
             </Link>
@@ -550,40 +557,40 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
             <Link
               href="/contact"
               onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center gap-3 px-3.5 py-3 rounded-xl text-[15px] font-semibold transition-all ${
+              className={`flex items-center gap-3 px-3.5 py-3 rounded-none text-[15px] font-semibold transition-all ${
                 isContactActive
                   ? "bg-[#0072CE]/10 text-[#0072CE]"
                   : "text-[var(--ink)] hover:bg-[var(--card-soft)] hover:text-[#0072CE]"
               }`}
             >
               <div
-                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${
-                  isContactActive ? "bg-[#0072CE] text-white" : "bg-[var(--card-soft)] text-[var(--ink-soft)]"
+                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-none transition-colors ${
+                  isContactActive ? "bg-transparent text-[#0072CE]" : "bg-[var(--card-soft)] text-[var(--ink-soft)]"
                 }`}
               >
-                <PhoneCall className="w-4 h-4" />
+                <PhoneCall className="w-4.5 h-4.5" />
               </div>
               <span>Contact</span>
             </Link>
           </nav>
 
-          {/* Sidebar Bottom CTAs (Matching Image 1 Reference exactly) */}
-          <div className="p-4 border-t border-[var(--line)] bg-[var(--card)] flex flex-col gap-3 shrink-0">
-            {/* Call us Card */}
-            <div className="flex items-center gap-3.5 rounded-2xl bg-[#F4F8FB] dark:bg-[#101F2F] p-3 border border-[#E3EAF2] dark:border-[#1E3347]">
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white dark:bg-[#162A3E] shadow-2xs text-[#00B050]">
-                <Phone className="h-5 w-5" />
+          {/* Sidebar Bottom CTAs */}
+          <div className="p-4 border-t border-[var(--line)] bg-[var(--card)] flex flex-col gap-2.5 shrink-0">
+            {/* Call us direct action — Slim & Compact */}
+            <a
+              href="tel:+919133933392"
+              className="flex items-center justify-between rounded-full bg-[var(--card-soft)] px-3.5 py-2 border border-[var(--line)] transition-all hover:border-[#00B050]/60 active:scale-[0.99] group"
+            >
+              <div className="flex items-center gap-2.5">
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#00B050]/15 text-[#00B050]">
+                  <Phone className="h-3.5 w-3.5" />
+                </span>
+                <span className="text-[11.5px] font-medium text-[var(--ink-soft)]">Call us</span>
               </div>
-              <div className="flex flex-col">
-                <span className="text-[11px] font-medium text-[#5E7690]">Call us</span>
-                <a
-                  href="tel:+919133933392"
-                  className="text-[14px] font-bold text-[#143A66] dark:text-[#EDF3F8] hover:text-[#0072CE] transition-colors tracking-tight"
-                >
-                  +91 91339 33392
-                </a>
-              </div>
-            </div>
+              <span className="text-[13px] font-bold text-[var(--ink)] group-hover:text-[#0072CE] transition-colors tracking-tight pr-1">
+                +91 91339 33392
+              </span>
+            </a>
 
             {/* Book appointment button: Navy Pill */}
             <button
@@ -593,7 +600,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
               }}
               className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-full bg-[#143A66] py-3.5 text-[14px] font-semibold text-white shadow-md transition-all hover:bg-[#0E2A4D] active:scale-[0.99]"
             >
-              <Stethoscope className="h-4 w-4" />
+              <Calendar className="h-4 w-4" />
               <span>Book appointment</span>
             </button>
 

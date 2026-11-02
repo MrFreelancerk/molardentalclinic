@@ -229,6 +229,169 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* ---------------------------------------------------------------------------
+   Hero CTA pills. Craft notes:
+   - Only transform / box-shadow / color transition; `transition: all` would
+     animate layout properties by accident.
+   - Lift is gated behind a real pointer so a tap on a phone doesn't leave the
+     button stuck in its hover state.
+   - Press compresses (scale 0.97) and collapses the shadow so the pill reads as
+     descending under the finger, instead of merely cancelling the lift.
+   - Enter is slower than release: deciding takes time, responding doesn't.
+--------------------------------------------------------------------------- */
+.cta {
+  --cta-ease: cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition:
+    transform 160ms var(--cta-ease),
+    background-color 180ms var(--cta-ease),
+    border-color 180ms var(--cta-ease),
+    color 180ms var(--cta-ease),
+    box-shadow 220ms var(--cta-ease);
+}
+
+/* Single light pass across the pill, clipped to its radius.
+   Linear timing on purpose: ease-out rushes the band off the pill in the first
+   ~150ms, which reads as a flicker rather than a sweep. Constant motion travels
+   the full 520ms and stays legible, so the alpha can stay low (0.24) and the
+   white label never drops under ~4.5:1 while the band passes behind it. */
+.cta__sheen {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-130%) skewX(-18deg);
+  background: linear-gradient(
+    90deg,
+    transparent 18%,
+    rgba(255, 255, 255, 0.24) 50%,
+    transparent 82%
+  );
+  transition:
+    transform 520ms linear,
+    opacity 160ms var(--cta-ease);
+}
+
+.cta__icon {
+  transition: transform 220ms var(--cta-ease);
+  transform-origin: 50% 20%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover {
+    transform: translateY(-2px);
+    transition-duration: 180ms;
+  }
+  .cta:active {
+    transition-duration: 110ms;
+  }
+
+  .cta--primary:hover {
+    box-shadow: 0 24px 46px -14px rgba(0, 0, 0, 0.5);
+  }
+  .cta--secondary:hover {
+    box-shadow: 0 22px 42px -16px rgba(0, 0, 0, 0.26);
+  }
+
+  .cta--primary:hover .cta__sheen {
+    opacity: 1;
+    transform: translateX(130%) skewX(-18deg);
+  }
+
+  .cta--primary:hover .cta__icon {
+    transform: translateY(-1px) scale(1.08);
+  }
+  .cta--secondary:hover .cta__icon {
+    animation: ctaRing 600ms var(--cta-ease) 1;
+  }
+}
+
+.cta:active,
+.cta:active:hover {
+  transform: translateY(0) scale(0.97);
+  transition-duration: 110ms;
+}
+
+.cta--primary:active,
+.cta--primary:active:hover {
+  box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.45);
+}
+
+.cta--secondary:active,
+.cta--secondary:active:hover {
+  box-shadow: 0 4px 10px -6px rgba(0, 0, 0, 0.18);
+}
+
+.cta:active .cta__icon {
+  animation: none;
+  transform: scale(0.94);
+}
+
+@keyframes ctaRing {
+  0% { transform: rotate(0deg); }
+  18% { transform: rotate(-13deg); }
+  38% { transform: rotate(11deg); }
+  58% { transform: rotate(-7deg); }
+  78% { transform: rotate(4deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* Fewer and gentler: keep the color/shadow feedback, drop the motion. */
+@media (prefers-reduced-motion: reduce) {
+  .cta:hover,
+  .cta:active {
+    transform: none;
+  }
+  .cta__sheen {
+    display: none;
+  }
+  .cta--secondary:hover .cta__icon {
+    animation: none;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-160%);
+  }
+  50%, 100% {
+    transform: translateX(160%);
+  }
+}
+
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: floatSlow 7s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 3.8s ease-in-out infinite;
+}
+
+/* ---------------------------------------------------------------------------
    Scroll reveal for the sections below the hero. ScrollReveal.tsx puts
    `reveal-ready` on <html> and `.is-in` on each element as it enters view, so
    without JavaScript nothing is ever hidden. The lift uses `transform`

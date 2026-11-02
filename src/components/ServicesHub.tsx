@@ -8,7 +8,7 @@ import {
   ArrowRight,
   Check,
   ShieldCheck,
-  Stethoscope,
+  Award,
   ScanLine,
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
@@ -251,7 +251,7 @@ export default function ServicesHub() {
                 </div>
 
                 <div className="flex items-start gap-3.5">
-                  <Stethoscope className="w-5 h-5 mt-0.5 text-[var(--ink-faint)] shrink-0" strokeWidth={1.75} />
+                  <Award className="w-5 h-5 mt-0.5 text-[var(--ink-faint)] shrink-0" strokeWidth={1.75} />
                   <div>
                     <h4 className="text-[13.5px] font-semibold text-[var(--ink)]">
                       Senior specialists
