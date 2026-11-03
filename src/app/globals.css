@@ -352,6 +352,51 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+/* ---------------------------------------------------------------------------
+   Dentists: the description panel swaps with the active doctor. One short
+   fade-up per change, keyed on the index so it replays every time; no layout
+   or height animation, so the left column never jumps.
+--------------------------------------------------------------------------- */
+@keyframes teamLineIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* The panel's copy doesn't swap as one block — each piece rises in on its own
+   beat, so the change reads as a considered move rather than a text replacement.
+   Opacity + transform only, so it stays on the compositor while the strip glides. */
+.team-desc > * {
+  animation: teamLineIn 560ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.team-desc > *:nth-child(1) { animation-delay: 0ms; }
+.team-desc > *:nth-child(2) { animation-delay: 55ms; }
+.team-desc > *:nth-child(3) { animation-delay: 110ms; }
+.team-desc > *:nth-child(4) { animation-delay: 165ms; }
+.team-desc > *:nth-child(n + 5) { animation-delay: 220ms; }
+
+/* The strip is translated, never scrolled, so nothing here re-lays-out per frame. */
+.team-track {
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .team-desc > * {
+    animation: none;
+  }
+
+  .team-track {
+    transition: none;
+  }
+}
+
 @keyframes float {
   0%, 100% {
     transform: translateY(0px);
